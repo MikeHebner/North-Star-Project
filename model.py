@@ -1,4 +1,4 @@
-class Student(object):
+class Student:
 
     def __init__(self, student_id, student_name):
         self.student_id = student_id
@@ -8,7 +8,7 @@ class Student(object):
         return self.student_name
 
 
-class Instructor(object):
+class Instructor:
 
     def __init__(self, instructor_id, instructor_name):
         self.instructor_id = instructor_id
@@ -18,25 +18,22 @@ class Instructor(object):
         return self.instructor_name
 
 
-class Enrollment(object):
+class Enrollment:
 
-    def __init__(self, student_id, section_id, flag):
+    def __init__(self, student_id, section_id):
         self.student_id = student_id
         self.section_id = section_id
-        self.flag = None
+        self.flag = []
 
-    def addFlag(self):
-        pass
+    def addFlag(self, flag):
+        self.flag.append(flag)
 
-    def removeFlag(self):
-        pass
+    def removeFlag(self, flag):
+        self.flag.remove(flag)
 
 
-class Section(object):
+class Section:
     def __init__(self, section_id, capacity, credits):
         self.section_id = section_id
         self.capacity = capacity
         self.credits = credits
-
-
-
