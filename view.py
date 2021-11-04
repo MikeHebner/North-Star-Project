@@ -2,7 +2,7 @@ from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QApplication, QMainWindow, QComboBox, QWidget, QPushButton
 from PyQt5.QtCore import pyqtSlot
 import sys
-
+#used for main menu
 def clicked():
     print("clicked")
 
