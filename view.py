@@ -10,14 +10,14 @@ def window():
     app = QApplication(sys.argv)
     win = QMainWindow()
     win.setGeometry(200, 200, 300, 300)
-    win.setWindowTitle("Header")
+    win.setWindowTitle("Main Menu")
 
     label = QtWidgets.QLabel(win)
-    label.setText("Label One")
+    label.setText("Add Student")
     label.move(75,10)
 
     label = QtWidgets.QLabel(win)
-    label.setText("Label Two")
+    label.setText("Add Instructor")
     label.move(75, 50)
 
     b1 = QtWidgets.QPushButton(win)
