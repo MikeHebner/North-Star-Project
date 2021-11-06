@@ -4,8 +4,8 @@ class Student:
         self.student_id = student_id
         self.student_name = student_name
 
-    def get_name(self):
-        return self.student_name
+    def __str__(self):
+        return self.student_id + " : " + self.student_name
 
 
 class Instructor:
@@ -14,8 +14,8 @@ class Instructor:
         self.instructor_id = instructor_id
         self.instructor_name = instructor_name
 
-    def get_name(self):
-        return self.instructor_name
+    def __str__(self):
+        return self.instructor_id + " : " + self.instructor_name
 
 
 class Enrollment:
