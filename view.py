@@ -22,11 +22,18 @@ def window():
 
     label = QtWidgets.QLabel(win)
     label.setText("Add Instructor")
-    label.move(75, 50)
+    label.move(75, 30)
 
     label = QtWidgets.QLabel(win)
     label.setText("Edit Database")
     label.move(75, 50)
+
+    label = QtWidgets.QLabel(win)
+    label.setText("Remove Student")
+    label.move(75, 70)
+    label = QtWidgets.QLabel(win)
+    label.setText("Remove Instructor")
+    label.move(75, 90)
 
     b1 = QtWidgets.QPushButton(win)
     b1.setText("Click to add")
@@ -34,8 +41,11 @@ def window():
     b1.clicked.connect(clicked)
 
     combo = QComboBox(win)
-    combo.addItem("Option One")
-    combo.addItem("Option Two")
+    combo.addItem("Add Student")
+    combo.addItem("Add Instructor")
+    combo.addItem("Remove Instructor")
+    combo.addItem("Remove Student")
+    combo.addItem("Edit Database")
 
     combo.move(50, 225)
 
