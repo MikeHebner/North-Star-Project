@@ -13,11 +13,19 @@ def window():
     win.setWindowTitle("Main Menu")
 
     label = QtWidgets.QLabel(win)
+    label.setText("Options: ")
+    label.move(20, 10)
+
+    label = QtWidgets.QLabel(win)
     label.setText("Add Student")
     label.move(75,10)
 
     label = QtWidgets.QLabel(win)
     label.setText("Add Instructor")
+    label.move(75, 50)
+
+    label = QtWidgets.QLabel(win)
+    label.setText("Edit Database")
     label.move(75, 50)
 
     b1 = QtWidgets.QPushButton(win)
@@ -30,12 +38,6 @@ def window():
     combo.addItem("Option Two")
 
     combo.move(50, 225)
-
-    combo = QComboBox(win)
-    combo.addItem("Option Three")
-    combo.addItem("Option Four")
-
-    combo.move(50, 175)
 
     win.show()
     sys.exit(app.exec_())
