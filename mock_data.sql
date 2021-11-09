@@ -13,3 +13,10 @@ INSERT INTO Instructor(instructor_ID,instructor_name) VALUES
 (0040, "Judi Dench"),
 (0055, "Mickey Mouse"),
 (0030, "Leonardo DaVinci");
+
+INSERT INTO Student(student_ID,student_name)VALUES
+(00009045,"Andrew Rodriges"),
+(00007832,"Roger Molinari"),
+(00004516,"Angus Akedo"),
+(00002214,"Sam Smith"),
+(00006969,"Cheddar Bob");
