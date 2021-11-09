@@ -41,8 +41,8 @@ CREATE TABLE Enrolls_in
 (
   flag VARCHAR NOT NULL,
   student_ID INT NOT NULL,
-  section_ID INT NOT NULL,
-  PRIMARY KEY (student_ID, section_ID),
+  course_link INT NOT NULL,
+  PRIMARY KEY (student_ID, course_link),
   FOREIGN KEY (student_ID) REFERENCES Student(student_ID),
-  FOREIGN KEY (section_ID) REFERENCES Section(course_link)
+  FOREIGN KEY (course_link) REFERENCES Section(course_link)
 );
