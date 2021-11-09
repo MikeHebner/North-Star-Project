@@ -20,3 +20,8 @@ INSERT INTO Student(student_ID,student_name)VALUES
 (00004516,"Angus Akedo"),
 (00002214,"Sam Smith"),
 (00006969,"Cheddar Bob");
+
+INSERT INTO Section(course_link,section_ID,capacity,course_ID,instructor_ID) VALUES
+(null,001,5,"ANI330",0045),
+(null,002,3,"ANI330",0060),
+(null,001,8,"DRM150",0040);
