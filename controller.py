@@ -1,11 +1,12 @@
 import sqlite3 as sql
 from typing import Tuple
 import pandas as pd
-import guiwindow
+# import guiwindow
 import sys
 
-
-def open_db(filename: str) -> Tuple[sql.Connection, sql.Cursor]:
-    db_connection = sql.connect(filename)
-    cursor = db_connection.cursor()
-    return db_connection, cursor
+# Test: Connect to Database and execute query
+conn = sql.connect('identifier.sqlite')
+cursor = conn.execute("SELECT * FROM Student")
+for row in cursor:
+    print("ID: ", row[0])
+    print("NAME: ", row[1])
