@@ -6,9 +6,18 @@ import sys
 def clicked():
     print("clicked")
 
+def otherWindow():
+    app = QApplication(sys.argv)
+    win = QMainWindow()
+    win.setGeometry(200, 200, 300, 300)
+    win.setWindowTitle("Main Menu")
+    win.show()
+
+
 def window():
     app = QApplication(sys.argv)
     win = QMainWindow()
+
     win.setGeometry(200, 200, 300, 300)
     win.setWindowTitle("Main Menu")
 
