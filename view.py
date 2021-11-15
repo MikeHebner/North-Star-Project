@@ -1,7 +1,14 @@
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QApplication, QMainWindow, QComboBox, QWidget, QPushButton
 from PyQt5.QtCore import pyqtSlot
+import PyQt5.QtWidgets as qtw
 import sys
+class MainWindow():
+    def __init__(self):
+        super().__init__()
+
+        self.show()
+
 #used for main menu
 def clicked():
     print("clicked")
