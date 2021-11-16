@@ -1,14 +1,30 @@
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QApplication, QMainWindow, QComboBox, QWidget, QPushButton
 from PyQt5.QtCore import pyqtSlot
+import PyQt5.QtWidgets as qtw
 import sys
+class MainWindow():
+    def __init__(self):
+        super().__init__()
+
+        self.show()
+
 #used for main menu
 def clicked():
     print("clicked")
 
+def otherWindow():
+    app = QApplication(sys.argv)
+    win = QMainWindow()
+    win.setGeometry(200, 200, 300, 300)
+    win.setWindowTitle("Main Menu")
+    win.show()
+
+
 def window():
     app = QApplication(sys.argv)
     win = QMainWindow()
+
     win.setGeometry(200, 200, 300, 300)
     win.setWindowTitle("Main Menu")
 
