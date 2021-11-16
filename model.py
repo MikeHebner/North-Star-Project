@@ -3,13 +3,13 @@ import sqlite3 as sql
 conn = sql.connect('identifier.sqlite')
 
 
+# test method, needs to be implemented for general use
 def printSemester():
     cursor = conn.execute("SELECT * FROM Enrolls_in JOIN Student S on S.student_ID = Enrolls_in.student_ID")
     for row in cursor:
         print(row)
 
 
-printSemester()
 
 
 class Student:
@@ -32,7 +32,7 @@ class Student:
         return result
 
 x = Student.getAll()
-print(x[1].student_name)
+print(x[1])
 
 
 class Instructor:
@@ -41,7 +41,19 @@ class Instructor:
         self.instructor_name = instructor_name
 
     def __str__(self):
-        return self.instructor_id + " : " + self.instructor_name
+        return ("%s:%s" % (self.instructor_id,self.instructor_name))
+
+    @classmethod
+    def getAll(self):
+        result = []
+        q = "SELECT * FROM Instructor"
+        cursor = conn.execute(q)
+        for row in cursor:
+            instructor = Instructor(row[0], row[1])
+            result.append(instructor)
+        return result
+
+y= Instructor.getAll()
 
 
 class Enrollment:
