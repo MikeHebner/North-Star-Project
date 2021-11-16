@@ -11,6 +11,22 @@ class AddStudent(QWidget):
         layout.addWidget(self.label)
         self.setLayout(layout)
 
+class AddInstructor(QWidget):
+    def __init__(self):
+        super().__init__()
+        layout = QVBoxLayout()
+        self.label = QLabel("Another Window2")
+        layout.addWidget(self.label)
+        self.setLayout(layout)
+
+class editDatabase(QWidget):
+    def __init__(self):
+        super().__init__()
+        layout = QVBoxLayout()
+        self.label = QLabel("Another Window3")
+        layout.addWidget(self.label)
+        self.setLayout(layout)
+
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -19,17 +35,17 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("Main Menu")
 
         pybutton = QPushButton('Add Student', self)
-        pybutton.clicked.connect(self.show_new_window)
+        pybutton.clicked.connect(self.showAddStudent)
         pybutton.resize(100, 32)
         pybutton.move(50, 20)
 
         pybutton2 = QPushButton('Add Instructor', self)
-        pybutton2.clicked.connect(self.clickMethod)
+        pybutton2.clicked.connect(self.showAddInstructor)
         pybutton2.resize(100, 32)
         pybutton2.move(50, 60)
 
         pybutton3 = QPushButton('Edit Course', self)
-        pybutton3.clicked.connect(self.clickMethod)
+        pybutton3.clicked.connect(self.showEditDatabase)
         pybutton3.resize(100, 32)
         pybutton3.move(50, 100)
 
@@ -41,9 +57,24 @@ class MainWindow(QMainWindow):
     def clickMethod(self):
         print('Clicked Pyqt button.')
 
-    def show_new_window(self, checked):
+    def showAddStudent(self, checked):
         if self.w is None:
             self.w = AddStudent()
+            self.w.show()
+        else:
+            self.w.close()
+            self.w = None
+
+    def showAddInstructor(self, checked):
+        if self.w is None:
+            self.w = AddInstructor()
+            self.w.show()
+        else:
+            self.w.close()
+            self.w = None
+    def showEditDatabase(self, checked):
+        if self.w is None:
+            self.w = editDatabase()
             self.w.show()
         else:
             self.w.close()
