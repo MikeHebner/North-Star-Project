@@ -1,8 +1,9 @@
 import sys
-from PyQt5 import QtWidgets, QtCore
+from PyQt5 import QtWidgets, QtCore, QtGui
 from PyQt5.QtWidgets import QApplication, QMainWindow, QComboBox, QWidget, QPushButton, QLabel, QVBoxLayout, QLineEdit, \
     QGridLayout
 from PyQt5.QtCore import pyqtSlot, QSize
+import PyQt5.QtWidgets as qtw
 
 
 class AddStudent(QWidget):
@@ -10,15 +11,19 @@ class AddStudent(QWidget):
         super().__init__()
         self.setWindowTitle('Add Student')
         self.resize(200, 200)
-        layout = QGridLayout()
-        id1 = QLabel('<font size="4"> Username </font>')
-        layout.addWidget(self.label)
-
-        self.lineEditID = QLineEdit()
-        self.lineEditID.setPlaceholderText("Student ID")
-        layout.addWidget(id1, 0, 0)
-        layout.addWidget(self.lineEditID, 0, 1)
+        layout = QVBoxLayout()
+        self.textbox = QLineEdit(self)
+        self.textbox.setPlaceholderText("Enter Student Name")
+        self.textbox.move(20, 20)
+        self.textbox2 = QLineEdit(self)
+        self.textbox2.setPlaceholderText("Enter Student ID")
+        self.textbox2.move(20, 60)
+        self.b1 = QPushButton("Add Student", self)
+        layout.addWidget(self.b1)
+        self.b1.resize(30,100)#error button not resizing cant figure out
+        self.b1.move(200, 50)
         self.setLayout(layout)
+        self.show()
 
 
 class AddInstructor(QWidget):
@@ -46,7 +51,9 @@ class MainWindow(QMainWindow):
 
         self.setMinimumSize(QSize(300, 200))
         self.setWindowTitle("Main Menu")
+        self.initUI()
 
+    def initUI(self):
         pybutton = QPushButton('Add Student', self)
         pybutton.clicked.connect(self.showAddStudent)
         pybutton.resize(100, 32)
@@ -99,52 +106,4 @@ if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     mainWin = MainWindow()
     mainWin.show()
-    sys.exit(app.exec_())
-
-
-def window():
-    app = QApplication(sys.argv)
-    win = QMainWindow()
-
-    win.setGeometry(200, 200, 300, 300)
-    win.setWindowTitle("Main Menu")
-
-    label = QtWidgets.QLabel(win)
-    label.setText("Options: ")
-    label.move(20, 10)
-
-    label = QtWidgets.QLabel(win)
-    label.setText("Choose an option: ")
-    label.move(50, 180)
-
-    label = QtWidgets.QLabel(win)
-    label.setText("Faculty")
-    label.move(75, 10)
-
-    label = QtWidgets.QLabel(win)
-    label.setText("Student")
-    label.move(75, 30)
-
-    label = QtWidgets.QLabel(win)
-    label.setText("Course")
-    label.move(75, 50)
-
-    label = QtWidgets.QLabel(win)
-    label.setText("Section")
-    label.move(75, 70)
-
-    b1 = QtWidgets.QPushButton(win)
-    b1.setText("Choose")
-    b1.move(170, 225)
-    b1.clicked.connect()
-
-    combo = QComboBox(win)
-    combo.addItem("Faculty")
-    combo.addItem("Student")
-    combo.addItem("Course")
-    combo.addItem("Section")
-
-    combo.move(50, 225)
-
-    win.show()
     sys.exit(app.exec_())
