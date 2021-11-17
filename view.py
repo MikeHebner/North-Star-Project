@@ -12,8 +12,8 @@ class AddStudent(QWidget):
         self.setWindowTitle('Add Student')
         self.resize(200, 200)
         layout = QVBoxLayout()
-        self.initUI()
         self.setLayout(layout)
+        self.initUI()
 
     def initUI(self):
         textbox = QLineEdit(self)
@@ -23,8 +23,8 @@ class AddStudent(QWidget):
         textbox2.setPlaceholderText("Enter Student ID")
         textbox2.move(20, 60)
         button = QPushButton("Add Student", self)
-        # error button not resizing cant figure out
-        button.move(200, 50)
+        button.move(20, 100)
+
 
 
 
@@ -54,7 +54,9 @@ class editDatabase(QWidget):
         self.initUI()
     def initUI(self):
         button = QPushButton("Student Database", self)
-        button.move(20,50)
+        button.move(20, 50)
+        button2 = QPushButton("Faculty Database", self)
+        button2.move(20, 100)
         button2 = QPushButton("Faculty Database", self)
         button2.move(20, 100)
 
