@@ -1,15 +1,25 @@
 import sys
 from PyQt5 import QtWidgets, QtCore
-from PyQt5.QtWidgets import QApplication, QMainWindow, QComboBox, QWidget, QPushButton, QLabel, QVBoxLayout
+from PyQt5.QtWidgets import QApplication, QMainWindow, QComboBox, QWidget, QPushButton, QLabel, QVBoxLayout, QLineEdit, \
+    QGridLayout
 from PyQt5.QtCore import pyqtSlot, QSize
+
 
 class AddStudent(QWidget):
     def __init__(self):
         super().__init__()
-        layout = QVBoxLayout()
-        self.label = QLabel("Another Window")
+        self.setWindowTitle('Add Student')
+        self.resize(200, 200)
+        layout = QGridLayout()
+        id1 = QLabel('<font size="4"> Username </font>')
         layout.addWidget(self.label)
+
+        self.lineEditID = QLineEdit()
+        self.lineEditID.setPlaceholderText("Student ID")
+        layout.addWidget(id1, 0, 0)
+        layout.addWidget(self.lineEditID, 0, 1)
         self.setLayout(layout)
+
 
 class AddInstructor(QWidget):
     def __init__(self):
@@ -19,6 +29,7 @@ class AddInstructor(QWidget):
         layout.addWidget(self.label)
         self.setLayout(layout)
 
+
 class editDatabase(QWidget):
     def __init__(self):
         super().__init__()
@@ -27,10 +38,12 @@ class editDatabase(QWidget):
         layout.addWidget(self.label)
         self.setLayout(layout)
 
+
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.w = None
+
         self.setMinimumSize(QSize(300, 200))
         self.setWindowTitle("Main Menu")
 
@@ -72,6 +85,7 @@ class MainWindow(QMainWindow):
         else:
             self.w.close()
             self.w = None
+
     def showEditDatabase(self, checked):
         if self.w is None:
             self.w = editDatabase()
