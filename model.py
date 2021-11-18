@@ -6,7 +6,7 @@ conn = sql.connect('identifier.sqlite')
 
 
 # test method, needs to be implemented for general use
-def printSemester():
+def printAllStudentsEnrolledSemester():
     cursor = conn.execute("SELECT * FROM Enrolls_in JOIN Student S on S.student_ID = Enrolls_in.student_ID")
     for row in cursor:
         print(row)
@@ -14,12 +14,13 @@ def printSemester():
 
 class Student:
 
-    def __init__(self, student_id=None, student_name=None):
+    def __init__(self, student_id, student_name):
         self.student_id = student_id
         self.student_name = student_name
 
     def __str__(self):
-        return ("%s:%s" % (self.student_id, self.student_name))
+        # Formating a string with students
+        return "ID:%s, NAME:%s" % (self.student_id, self.student_name)
 
     @classmethod
     def getAll(self):
@@ -27,13 +28,15 @@ class Student:
         q = "SELECT * FROM Student"
         cursor = conn.execute(q)
         for row in cursor:
-            student = Student(row[1], row[0])
+            student = Student(row[0], row[1])
             result.append(student)
         return result
 
 
 x = Student.getAll()
-print(x[1])
+xSize = len(x)
+for i in range(xSize):
+    print(x[i])
 
 
 class Instructor:
@@ -42,7 +45,7 @@ class Instructor:
         self.instructor_name = instructor_name
 
     def __str__(self):
-        return ("%s:%s" % (self.instructor_id, self.instructor_name))
+        return "ID:%s, NAME:%s" % (self.instructor_id, self.instructor_name)
 
     @classmethod
     def getAll(self):
@@ -63,7 +66,6 @@ class Enrollment:
         self.student_id = student_id
         self.section_id = section_id
         self.flag = None
-
 
 
 class Section:
