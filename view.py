@@ -19,11 +19,15 @@ class AddStudent(QWidget):
         textbox = QLineEdit(self)
         textbox.setPlaceholderText("Enter Student Name")
         textbox.move(20, 20)
+        textbox.resize(150, 30)
         textbox2 = QLineEdit(self)
         textbox2.setPlaceholderText("Enter Student ID")
         textbox2.move(20, 60)
+        textbox2.resize(150,30)
         button = QPushButton("Add Student", self)
+        button.resize(100, 30)
         button.move(20, 100)
+
 
 
 
@@ -34,15 +38,19 @@ class AddInstructor(QWidget):
         self.setWindowTitle('Add Instructor')
         self.resize(200, 200)
         layout = QVBoxLayout()
-        self.initUi()
         self.setLayout(layout)
+        self.initUi()
     def initUi(self):
         textbox = QLineEdit(self)
         textbox.setPlaceholderText("Enter Instructor Name")
         textbox.move(20, 20)
+        textbox.resize(150, 30)
         textbox2 = QLineEdit(self)
         textbox2.setPlaceholderText("Enter Instructor ID")
         textbox2.move(20, 60)
+        textbox2.resize(150, 30)
+        button = QPushButton("Add Instructor", self)
+        button.move(20, 100)
 
 class editDatabase(QWidget):
     def __init__(self):
@@ -73,22 +81,22 @@ class MainWindow(QMainWindow):
     def initUI(self):
         pybutton = QPushButton('Add Student', self)
         pybutton.clicked.connect(self.showAddStudent)
-        pybutton.resize(100, 32)
+        pybutton.resize(150, 40)
         pybutton.move(50, 20)
 
         pybutton2 = QPushButton('Add Instructor', self)
         pybutton2.clicked.connect(self.showAddInstructor)
-        pybutton2.resize(100, 32)
+        pybutton2.resize(150, 40)
         pybutton2.move(50, 60)
 
         pybutton3 = QPushButton('Edit Database', self)
         pybutton3.clicked.connect(self.showEditDatabase)
-        pybutton3.resize(100, 32)
+        pybutton3.resize(150, 40)
         pybutton3.move(50, 100)
 
         pybutton4 = QPushButton('Edit Course', self)
         pybutton4.clicked.connect(self.clickMethod)
-        pybutton4.resize(100, 32)
+        pybutton4.resize(150, 40)
         pybutton4.move(50, 140)
 
     def clickMethod(self):
