@@ -18,14 +18,14 @@ class AddStudent(QWidget):
         textbox = QLineEdit(self)
         textbox.setPlaceholderText("Enter Student Name")
         textbox.move(20, 20)
+        textbox.resize(150, 30)
         textbox2 = QLineEdit(self)
         textbox2.setPlaceholderText("Enter Student ID")
         textbox2.move(20, 60)
+        textbox2.resize(150,30)
         button = QPushButton("Add Student", self)
+        button.resize(100, 30)
         button.move(20, 100)
-
-
-
 
 class AddInstructor(QWidget):
     def __init__(self):
@@ -33,15 +33,19 @@ class AddInstructor(QWidget):
         self.setWindowTitle('Add Instructor')
         self.resize(200, 200)
         layout = QVBoxLayout()
-        self.initUi()
         self.setLayout(layout)
+        self.initUi()
     def initUi(self):
         textbox = QLineEdit(self)
         textbox.setPlaceholderText("Enter Instructor Name")
         textbox.move(20, 20)
+        textbox.resize(150, 30)
         textbox2 = QLineEdit(self)
         textbox2.setPlaceholderText("Enter Instructor ID")
         textbox2.move(20, 60)
+        textbox2.resize(150, 30)
+        button = QPushButton("Add Instructor", self)
+        button.move(20, 100)
 
 class editDatabase(QWidget):
     def __init__(self):
@@ -59,36 +63,53 @@ class editDatabase(QWidget):
         button2 = QPushButton("Faculty Database", self)
         button2.move(20, 100)
 
-
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.w = None
-
-        self.setMinimumSize(QSize(300, 200))
+        self.setMinimumSize(QSize(350, 300))
         self.setWindowTitle("Main Menu")
+        self.label = QLabel("Database", self)
+        self.label.move(40, 0)
+        self.label1 = QLabel("Registration", self)
+        self.label1.move(180, 0)
         self.initUI()
 
     def initUI(self):
-        pybutton = QPushButton('Add Student', self)
+        pybutton = QPushButton('Student', self)
         pybutton.clicked.connect(self.showAddStudent)
-        pybutton.resize(100, 32)
-        pybutton.move(50, 20)
+        pybutton.resize(120, 40)
+        pybutton.move(20, 20)
 
-        pybutton2 = QPushButton('Add Instructor', self)
+        pybutton2 = QPushButton('Instructor', self)
         pybutton2.clicked.connect(self.showAddInstructor)
-        pybutton2.resize(100, 32)
-        pybutton2.move(50, 60)
+        pybutton2.resize(120, 40)
+        pybutton2.move(20, 60)
 
-        pybutton3 = QPushButton('Edit Database', self)
+        pybutton3 = QPushButton('Section', self)
         pybutton3.clicked.connect(self.showEditDatabase)
-        pybutton3.resize(100, 32)
-        pybutton3.move(50, 100)
+        pybutton3.resize(120, 40)
+        pybutton3.move(20, 100)
 
-        pybutton4 = QPushButton('Edit Course', self)
+        pybutton4 = QPushButton('Course', self)
         pybutton4.clicked.connect(self.clickMethod)
-        pybutton4.resize(100, 32)
-        pybutton4.move(50, 140)
+        pybutton4.resize(120, 40)
+        pybutton4.move(20, 140)
+
+        pybutton5 = QPushButton("Register Students", self)
+        pybutton5.clicked.connect(self.clickMethod)
+        pybutton5.resize(150, 40)
+        pybutton5.move(160, 20)
+
+        pybutton6 = QPushButton("Remove Flags", self)
+        pybutton6.clicked.connect(self.clickMethod)
+        pybutton6.resize(150, 40)
+        pybutton6.move(160, 60)
+
+        pybutton6 = QPushButton("Print Student Details", self)
+        pybutton6.clicked.connect(self.clickMethod)
+        pybutton6.resize(150, 40)
+        pybutton6.move(160, 100)
 
     def clickMethod(self):
         print('Clicked Pyqt button.')
