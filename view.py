@@ -5,11 +5,10 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QComboBox, QWidget, QPush
 from PyQt5.QtCore import pyqtSlot, QSize
 import PyQt5.QtWidgets as qtw
 
-
 class AddStudent(QWidget):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle('Add Student')
+        self.setWindowTitle('Student Menu')
         self.resize(200, 200)
         layout = QVBoxLayout()
         self.setLayout(layout)
@@ -25,8 +24,11 @@ class AddStudent(QWidget):
         textbox2.move(20, 60)
         textbox2.resize(150,30)
         button = QPushButton("Add Student", self)
-        button.resize(100, 30)
+        button.resize(120, 40)
         button.move(20, 100)
+        button = QPushButton("Remove Student", self)
+        button.resize(130, 40)
+        button.move(20, 140)
 
 class AddInstructor(QWidget):
     def __init__(self):
@@ -46,7 +48,11 @@ class AddInstructor(QWidget):
         textbox2.move(20, 60)
         textbox2.resize(150, 30)
         button = QPushButton("Add Instructor", self)
+        button.resize(140, 40)
         button.move(20, 100)
+        button = QPushButton("Remove Instructor", self)
+        button.resize(140, 40)
+        button.move(20, 140)
 
 class editDatabase(QWidget):
     def __init__(self):
