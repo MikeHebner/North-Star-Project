@@ -19,8 +19,8 @@ CREATE TABLE Instructor
 DROP TABLE IF EXISTS Student;
 CREATE TABLE Student
 (
-  student_name VARCHAR NOT NULL,
   student_ID INT NOT NULL,
+  student_name VARCHAR NOT NULL,
   PRIMARY KEY (student_ID)
 );
 
