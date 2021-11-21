@@ -31,12 +31,28 @@ class Student:
             student = Student(row[0], row[1])
             result.append(student)
         return result
+    @classmethod
+    def add(self,studentID,studentName):
 
 
+        q = "INSERT INTO Student(student_ID,student_name) VALUES (?,?)"
+        cursor = conn.execute(q,(studentID,studentName))
+    @classmethod
+    def remove(self,studentName):
+        q = "DELETE FROM Student WHERE student_name = (?)"
+        conn.execute(q, (studentName,))
+    #@classmethod
+   # def editStudentInfo(self,studentName,studentID):
+       # q = "UPDATE Student "
+
+
+Student.add(123,"Kyle Stearns")
+Student.remove("Kyle Stearns")
 x = Student.getAll()
 xSize = len(x)
 for i in range(xSize):
     print(x[i])
+
 
 
 class Instructor:
