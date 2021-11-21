@@ -45,7 +45,22 @@ class Student:
    # def editStudentInfo(self,studentName,studentID):
        # q = "UPDATE Student "
 
-
+def add(status,ID,name):
+    if status=="student":
+        q = "INSERT INTO Student(student_ID,student_name) VALUES (?,?)"
+        conn.execute(q, (ID, name))
+    elif status=="instructor":
+        q = "INSERT INTO Instructor(instructor_ID, instructor_name) VALUES (?,?)"
+        conn.execute(q, (ID, name))
+def remove(status,name):
+    if status == "student":
+        q = "DELETE FROM Student WHERE student_name = (?)"
+        conn.execute(q, (name,))
+    elif status == "instructor":
+        q = "DELETE FROM Instructor WHERE instructor_name = (?)"
+        conn.execute(q, (name,))
+add("student",12223,"Bobby")
+remove("student","Bobby")
 Student.add(123,"Kyle Stearns")
 Student.remove("Kyle Stearns")
 x = Student.getAll()
