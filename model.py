@@ -34,35 +34,52 @@ class Student:
     @classmethod
     def add(self,studentID,studentName):
 
-
-        q = "INSERT INTO Student(student_ID,student_name) VALUES (?,?)"
-        cursor = conn.execute(q,(studentID,studentName))
+        try:
+            q = "INSERT INTO Student(student_ID,student_name) VALUES (?,?)"
+            cursor = conn.execute(q,(studentID,studentName))
+        except:
+            print("That name or ID already exists in this table")
     @classmethod
     def remove(self,studentName):
         q = "DELETE FROM Student WHERE student_name = (?)"
         conn.execute(q, (studentName,))
-    #@classmethod
-   # def editStudentInfo(self,studentName,studentID):
-       # q = "UPDATE Student "
+
+    @classmethod
+    def editStudentInfo(self,studentName,studentID):
+        q = "UPDATE Student Set student_ID=(?) WHERE student_name==(?)"
+        conn.execute(q, (studentID,studentName))
 
 def add(status,ID,name):
     if status=="student":
-        q = "INSERT INTO Student(student_ID,student_name) VALUES (?,?)"
-        conn.execute(q, (ID, name))
+        try:
+
+            q = "INSERT INTO Student(student_ID,student_name) VALUES (?,?)"
+            conn.execute(q, (ID, name))
+        except:
+            print("That name or ID already exists in this table")
+
+
+
     elif status=="instructor":
-        q = "INSERT INTO Instructor(instructor_ID, instructor_name) VALUES (?,?)"
-        conn.execute(q, (ID, name))
+        try:
+            q = "INSERT INTO Instructor(instructor_ID, instructor_name) VALUES (?,?)"
+            conn.execute(q, (ID, name))
+        except:
+            print("That name or ID already exists in this table")
 def remove(status,name):
     if status == "student":
-        q = "DELETE FROM Student WHERE student_name = (?)"
-        conn.execute(q, (name,))
+
+            q = "DELETE FROM Student WHERE student_name = (?)"
+            conn.execute(q, (name,))
     elif status == "instructor":
         q = "DELETE FROM Instructor WHERE instructor_name = (?)"
         conn.execute(q, (name,))
-add("student",12223,"Bobby")
+add("student",123,"Bobby")
 remove("student","Bobby")
-Student.add(123,"Kyle Stearns")
-Student.remove("Kyle Stearns")
+Student.add(123,"Bobby")
+Student.remove("Roger Molinari")
+add("student",123,"Bobby1")
+Student.editStudentInfo("Bobby",12345678)
 x = Student.getAll()
 xSize = len(x)
 for i in range(xSize):
