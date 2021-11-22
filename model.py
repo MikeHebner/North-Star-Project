@@ -45,10 +45,16 @@ class Student:
         conn.execute(q, (studentName,))
 
     @classmethod
-    def editStudentInfo(self,studentName,studentID):
-        q = "UPDATE Student Set student_ID=(?) WHERE student_name==(?)"
-        conn.execute(q, (studentID,studentName))
-
+    def editStudentInfo(self,infoType,studentName,studentID):
+        if infoType=="ID":
+            q = "UPDATE Student Set student_ID=(?) WHERE student_name==(?)"
+            conn.execute(q, (studentID,studentName))
+        elif infoType=="name":
+            q = "UPDATE Student Set student_name=(?) WHERE student_ID==(?)"
+            conn.execute(q, (studentName,studentID))
+        else:
+            print("Please use either ID or name")
+            #testing else statement
 def add(status,ID,name):
     if status=="student":
         try:
@@ -74,12 +80,13 @@ def remove(status,name):
     elif status == "instructor":
         q = "DELETE FROM Instructor WHERE instructor_name = (?)"
         conn.execute(q, (name,))
+
 add("student",123,"Bobby")
 remove("student","Bobby")
 Student.add(123,"Bobby")
 Student.remove("Roger Molinari")
 add("student",123,"Bobby1")
-Student.editStudentInfo("Bobby",12345678)
+Student.editStudentInfo("name","OtherBobby",123)
 x = Student.getAll()
 xSize = len(x)
 for i in range(xSize):
