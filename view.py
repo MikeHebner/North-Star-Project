@@ -140,9 +140,6 @@ class MainWindow(QMainWindow):
         self.label.move(40, 0)
         self.label1 = QLabel("Registration", self)
         self.label1.move(180, 0)
-        #self.showAddCourse(self)
-        #self.showRemoveFlag(self)
-        self.showPrintStudentDetail(self)
         self.initUI()
 
     def initUI(self):
@@ -162,7 +159,7 @@ class MainWindow(QMainWindow):
         pybutton3.move(20, 100)
 
         pybutton4 = QPushButton('Course', self)
-        pybutton4.clicked.connect(self.clickMethod)
+        pybutton4.clicked.connect(self.showAddCourse)
         pybutton4.resize(120, 40)
         pybutton4.move(20, 140)
 
@@ -172,12 +169,12 @@ class MainWindow(QMainWindow):
         pybutton5.move(160, 20)
 
         pybutton6 = QPushButton("Remove Flags", self)
-        pybutton6.clicked.connect(self.clickMethod)
+        pybutton6.clicked.connect(self.showRemoveFlag)
         pybutton6.resize(150, 40)
         pybutton6.move(160, 60)
 
         pybutton6 = QPushButton("Print Student Details", self)
-        pybutton6.clicked.connect(self.clickMethod)
+        pybutton6.clicked.connect(self.showPrintStudentDetail)
         pybutton6.resize(150, 40)
         pybutton6.move(160, 100)
 
