@@ -1,6 +1,6 @@
 import sys
 from PyQt5 import QtWidgets, QtCore, QtGui
-from PyQt5.QtWidgets import QApplication, QMainWindow, QComboBox, QWidget, QPushButton, QLabel, QVBoxLayout, QLineEdit, QGridLayout
+from PyQt5.QtWidgets import QApplication, QMainWindow, QComboBox, QWidget, QPushButton, QLabel, QVBoxLayout, QLineEdit, QGridLayout, QMessageBox
 from PyQt5.QtCore import pyqtSlot, QSize
 import PyQt5.QtWidgets as qtw
 
@@ -91,23 +91,14 @@ class printStudentDetails(QWidget):
 
     def showStudentInfo(self, checked):
         if self.w is None:
-            self.w = studentInfo()
+            self.w = self.__init__()
+            self.w = self.initUI()
             self.w.show()
         else:
             self.w.close()
             self.w = None
 
-class studentInfo(QWidget):
-    def __init__(self):
-        super().__init__()
-        self.setWindowTitle("Student Details")
-        self.resize(200,200)
-        layout = QVBoxLayout()
-        self.setLayout(layout)
-        self.initUI()
 
-    def initUI(self):
-        button = QPushButton("test", self)
 
 class addStudentCourse(QWidget):
     def __init__(self):
