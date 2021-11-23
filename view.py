@@ -222,6 +222,14 @@ class MainWindow(QMainWindow):
             self.w.close()
             self.w = None
 
+    def showPrintStudentDetail(self, checked):
+        if self.w is None:
+            self.w = PrintStudentDetails()
+            self.w.show()
+        else:
+            self.w.close()
+            self.w = None
+
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
