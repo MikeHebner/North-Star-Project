@@ -4,10 +4,11 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QComboBox, QWidget, QPush
 from PyQt5.QtCore import pyqtSlot, QSize
 import PyQt5.QtWidgets as qtw
 
+
 class AddStudent(QWidget):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle('Student Menu')
+        self.setWindowTitle('Add Student')
         self.resize(200, 200)
         layout = QVBoxLayout()
         self.setLayout(layout)
@@ -23,11 +24,8 @@ class AddStudent(QWidget):
         textbox2.move(20, 60)
         textbox2.resize(150,30)
         button = QPushButton("Add Student", self)
-        button.resize(120, 40)
+        button.resize(100, 30)
         button.move(20, 100)
-        button = QPushButton("Remove Student", self)
-        button.resize(130, 40)
-        button.move(20, 140)
 
 class AddInstructor(QWidget):
     def __init__(self):
@@ -47,11 +45,69 @@ class AddInstructor(QWidget):
         textbox2.move(20, 60)
         textbox2.resize(150, 30)
         button = QPushButton("Add Instructor", self)
-        button.resize(140, 40)
         button.move(20, 100)
-        button = QPushButton("Remove Instructor", self)
-        button.resize(140, 40)
-        button.move(20, 140)
+
+class AddCourse(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle('Add Course')
+        self.resize(200, 200)
+        layout = QVBoxLayout()
+        self.setLayout(layout)
+        self.initUi()
+
+    def initUi(self):
+        textbox = QLineEdit(self)
+        textbox.setPlaceholderText("Enter Course ID")
+        textbox.move(20, 20)
+        textbox.resize(150, 30)
+        textbox2 = QLineEdit(self)
+        textbox2.setPlaceholderText("Enter Student ID")
+        textbox2.move(20, 60)
+        textbox2.resize(150, 30)
+        textbox3 = QLineEdit(self)
+        textbox3.setPlaceholderText("Enter Course Section ID")
+        textbox3.move(20, 60)
+        textbox3.resize(150, 30)
+        button = QPushButton("Add Course", self)
+        button.move(20, 100)
+
+class RemoveFlag(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle('Remove Flag')
+        self.resize(200, 200)
+        layout = QVBoxLayout()
+        self.setLayout(layout)
+        self.initUi()
+    def initUi(self):
+        textbox = QLineEdit(self)
+        textbox.setPlaceholderText("Enter Student ID")
+        textbox.move(20, 20)
+        textbox.resize(150, 30)
+        button = QPushButton("Search", self)
+        button.move(20, 100)
+        button2 = QPushButton("Exit", self)
+        button2.move(20, 125)
+
+class PrintStudentDetails(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle('Student Details')
+        self.resize(200, 200)
+        layout = QVBoxLayout()
+        self.setLayout(layout)
+        self.initUi()
+
+    def initUi(self):
+        textbox = QLineEdit(self)
+        textbox.setPlaceholderText("Enter Student ID")
+        textbox.move(20, 20)
+        textbox.resize(150, 30)
+        button = QPushButton("Search", self)
+        button.move(20, 100)
+        button2 = QPushButton("Exit", self)
+        button2.move(20, 125)
 
 class editDatabase(QWidget):
     def __init__(self):
@@ -63,11 +119,14 @@ class editDatabase(QWidget):
         self.initUI()
     def initUI(self):
         button = QPushButton("Student Database", self)
-        button.move(20, 50)
+        button.move(20, 100)
+        button.resize(145, 30)
         button2 = QPushButton("Faculty Database", self)
-        button2.move(20, 100)
-        button2 = QPushButton("Faculty Database", self)
-        button2.move(20, 100)
+        button2.move(20, 150)
+        button2.resize(145, 30)
+
+
+
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -98,7 +157,7 @@ class MainWindow(QMainWindow):
         pybutton3.move(20, 100)
 
         pybutton4 = QPushButton('Course', self)
-        pybutton4.clicked.connect(self.clickMethod)
+        pybutton4.clicked.connect(self.showAddCourse)
         pybutton4.resize(120, 40)
         pybutton4.move(20, 140)
 
@@ -108,19 +167,19 @@ class MainWindow(QMainWindow):
         pybutton5.move(160, 20)
 
         pybutton6 = QPushButton("Remove Flags", self)
-        pybutton6.clicked.connect(self.clickMethod)
+        pybutton6.clicked.connect(self.showRemoveFlag)
         pybutton6.resize(150, 40)
         pybutton6.move(160, 60)
 
-        pybutton6 = QPushButton("Print Student Details", self)
-        pybutton6.clicked.connect(self.clickMethod)
-        pybutton6.resize(150, 40)
-        pybutton6.move(160, 100)
+        pybutton7 = QPushButton("Print Student Details", self)
+        pybutton7.clicked.connect(self.showPrintStudentDetail)
+        pybutton7.resize(150, 40)
+        pybutton7.move(160, 100)
 
     def clickMethod(self):
         print('Clicked Pyqt button.')
 
-    def showAddStudent(self, checked):
+    def showAddStudent(self):
         if self.w is None:
             self.w = AddStudent()
             self.w.show()
@@ -128,7 +187,7 @@ class MainWindow(QMainWindow):
             self.w.close()
             self.w = None
 
-    def showAddInstructor(self, checked):
+    def showAddInstructor(self):
         if self.w is None:
             self.w = AddInstructor()
             self.w.show()
@@ -136,9 +195,33 @@ class MainWindow(QMainWindow):
             self.w.close()
             self.w = None
 
-    def showEditDatabase(self, checked):
+    def showEditDatabase(self):
         if self.w is None:
             self.w = editDatabase()
+            self.w.show()
+        else:
+            self.w.close()
+            self.w = None
+
+    def showAddCourse(self):
+        if self.w is None:
+            self.w = AddCourse()
+            self.w.show()
+        else:
+            self.w.close()
+            self.w = None
+
+    def showRemoveFlag(self):
+        if self.w is None:
+            self.w = RemoveFlag()
+            self.w.show()
+        else:
+            self.w.close()
+            self.w = None
+
+    def showPrintStudentDetail(self):
+        if self.w is None:
+            self.w = PrintStudentDetails()
             self.w.show()
         else:
             self.w.close()
