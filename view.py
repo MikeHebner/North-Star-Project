@@ -55,6 +55,7 @@ class AddCourse(QWidget):
         layout = QVBoxLayout()
         self.setLayout(layout)
         self.initUi()
+
     def initUi(self):
         textbox = QLineEdit(self)
         textbox.setPlaceholderText("Enter Course ID")
@@ -100,6 +101,7 @@ class MainWindow(QMainWindow):
         self.label.move(40, 0)
         self.label1 = QLabel("Registration", self)
         self.label1.move(180, 0)
+        self.showAddCourse(self)
         self.initUI()
 
     def initUI(self):
