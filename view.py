@@ -47,10 +47,10 @@ class AddInstructor(QWidget):
         button = QPushButton("Add Instructor", self)
         button.move(20, 100)
 
-class AddCourse(QWidget):
+class RegisterStudent(QWidget):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle('Add Course')
+        self.setWindowTitle('Register Student')
         self.resize(200, 200)
         layout = QVBoxLayout()
         self.setLayout(layout)
@@ -109,6 +109,8 @@ class PrintStudentDetails(QWidget):
         button2 = QPushButton("Exit", self)
         button2.move(20, 125)
 
+
+
 class editDatabase(QWidget):
     def __init__(self):
         super().__init__()
@@ -157,12 +159,12 @@ class MainWindow(QMainWindow):
         pybutton3.move(20, 100)
 
         pybutton4 = QPushButton('Course', self)
-        pybutton4.clicked.connect(self.showAddCourse)
+        pybutton4.clicked.connect(self.clickMethod)
         pybutton4.resize(120, 40)
         pybutton4.move(20, 140)
 
         pybutton5 = QPushButton("Register Students", self)
-        pybutton5.clicked.connect(self.clickMethod)
+        pybutton5.clicked.connect(self.showRegisterStudent)
         pybutton5.resize(150, 40)
         pybutton5.move(160, 20)
 
@@ -203,9 +205,9 @@ class MainWindow(QMainWindow):
             self.w.close()
             self.w = None
 
-    def showAddCourse(self):
+    def showRegisterStudent(self):
         if self.w is None:
-            self.w = AddCourse()
+            self.w = RegisterStudent()
             self.w.show()
         else:
             self.w.close()
