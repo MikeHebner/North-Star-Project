@@ -119,13 +119,10 @@ class editDatabase(QWidget):
         self.initUI()
     def initUI(self):
         button = QPushButton("Student Database", self)
-        button.move(20, 50)
+        button.move(20, 100)
         button2 = QPushButton("Faculty Database", self)
-        button2.move(20, 100)
-        button2 = QPushButton("Faculty Database", self)
-        button2.move(20, 100)
-        button3 = QPushButton("Course Database", self)
-        button3.move(20, 50)
+        button2.move(20, 150)
+
 
 
 
