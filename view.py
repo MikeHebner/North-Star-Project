@@ -107,7 +107,7 @@ class PrintStudentDetails(QWidget):
         button = QPushButton("Search", self)
         button.move(20, 100)
         button2 = QPushButton("Exit", self)
-        button2.move(20, 100)
+        button2.move(20, 125)
 
 class editDatabase(QWidget):
     def __init__(self):
@@ -139,9 +139,6 @@ class MainWindow(QMainWindow):
         self.label.move(40, 0)
         self.label1 = QLabel("Registration", self)
         self.label1.move(180, 0)
-        #self.showAddCourse(self)
-        #self.showRemoveFlag(self)
-        #self.showPrintStudentDetail(self)
         self.initUI()
 
     def initUI(self):
