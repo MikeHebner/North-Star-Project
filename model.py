@@ -40,16 +40,21 @@ class Student:
         except:
             print("That name or ID already exists in this table")
     @classmethod
-    def remove(self,studentName):
-        q = "DELETE FROM Student WHERE student_name = (?)"
-        conn.execute(q, (studentName,))
+    def remove(self,studentID):
+        q2 = "SELECT * FROM Student WHERE student_ID = (?)"
+        response = conn.execute(q2, (studentID,))
+        if len(response.fetchall())>0:
+            q = "DELETE FROM Student WHERE student_ID = (?)"
+            conn.execute(q, (studentID,))
+            return 1
+        else:
+            return 0
+
+
 
     @classmethod
-    def editStudentInfo(self,infoType,studentName,studentID):
-        if infoType=="ID":
-            q = "UPDATE Student Set student_ID=(?) WHERE student_name==(?)"
-            conn.execute(q, (studentID,studentName))
-        elif infoType=="name":
+    def editStudentInfo(self,studentName,studentID):
+        if(1):
             q = "UPDATE Student Set student_name=(?) WHERE student_ID==(?)"
             conn.execute(q, (studentName,studentID))
         else:
@@ -84,9 +89,9 @@ def remove(status,name):
 add("student",123,"Bobby")
 remove("student","Bobby")
 Student.add(123,"Bobby")
-Student.remove("Roger Molinari")
+print(Student.remove("9045"))
 add("student",123,"Bobby1")
-Student.editStudentInfo("name","OtherBobby",123)
+Student.editStudentInfo("OtherBobby","123")
 x = Student.getAll()
 xSize = len(x)
 for i in range(xSize):
