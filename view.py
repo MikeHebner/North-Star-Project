@@ -140,9 +140,9 @@ class MainWindow(QMainWindow):
         self.label.move(40, 0)
         self.label1 = QLabel("Registration", self)
         self.label1.move(180, 0)
-        self.showAddCourse(self)
+        #self.showAddCourse(self)
         #self.showRemoveFlag(self)
-        #self.showPrintStudentDetail(self)
+        self.showPrintStudentDetail(self)
         self.initUI()
 
     def initUI(self):
