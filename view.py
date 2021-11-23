@@ -129,7 +129,6 @@ class editDatabase(QWidget):
 
 
 
-
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -176,10 +175,10 @@ class MainWindow(QMainWindow):
         pybutton6.resize(150, 40)
         pybutton6.move(160, 60)
 
-        pybutton6 = QPushButton("Print Student Details", self)
-        pybutton6.clicked.connect(self.clickMethod)
-        pybutton6.resize(150, 40)
-        pybutton6.move(160, 100)
+        pybutton7 = QPushButton("Print Student Details", self)
+        pybutton7.clicked.connect(self.clickMethod)
+        pybutton7.resize(150, 40)
+        pybutton7.move(160, 100)
 
     def clickMethod(self):
         print('Clicked Pyqt button.')
