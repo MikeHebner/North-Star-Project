@@ -69,6 +69,32 @@ class editDatabase(QWidget):
         button2 = QPushButton("Faculty Database", self)
         button2.move(20, 100)
 
+class printStudentDetails(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Print Student Details")
+        self.resize(200,200)
+        layout = QVBoxLayout()
+        self.setLayout(layout)
+        self.initUI()
+
+    def initUI(self):
+        button = QPushButton("Student Database", self)
+        button.move(20, 50)
+        button2 = QPushButton("Faculty Database", self)
+        button2.move(20, 100)
+        button2 = QPushButton("Faculty Database", self)
+        button2.move(20, 100)
+
+    def showAddInstructor(self, checked):
+        if self.w is None:
+            self.w = AddInstructor()
+            self.w.show()
+        else:
+            self.w.close()
+            self.w = None
+
+
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -113,7 +139,7 @@ class MainWindow(QMainWindow):
         pybutton6.move(160, 60)
 
         pybutton6 = QPushButton("Print Student Details", self)
-        pybutton6.clicked.connect(self.clickMethod)
+        pybutton6.clicked.connect(self.showPrintStudent)
         pybutton6.resize(150, 40)
         pybutton6.move(160, 100)
 
@@ -144,6 +170,21 @@ class MainWindow(QMainWindow):
             self.w.close()
             self.w = None
 
+    def showEditDatabase(self, checked):
+        if self.w is None:
+            self.w = editDatabase()
+            self.w.show()
+        else:
+            self.w.close()
+            self.w = None
+
+    def showPrintStudent(self, checked):
+        if self.w is None:
+            self.w = printStudentDetails()
+            self.w.show()
+        else:
+            self.w.close()
+            self.w = None
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
