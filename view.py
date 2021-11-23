@@ -90,25 +90,7 @@ class RemoveFlag(QWidget):
         button2 = QPushButton("Exit", self)
         button2.move(20, 100)
 
-class editDatabase(QWidget):
-    def __init__(self):
-        super().__init__()
-        self.setWindowTitle("Choose Database")
-        self.resize(200,200)
-        layout = QVBoxLayout()
-        self.setLayout(layout)
-        self.initUI()
-    def initUI(self):
-        button = QPushButton("Student Database", self)
-        button.move(20, 50)
-        button2 = QPushButton("Faculty Database", self)
-        button2.move(20, 100)
-        button2 = QPushButton("Faculty Database", self)
-        button2.move(20, 100)
-        button3 = QPushButton("Course Database", self)
-        button3.move(20, 50)
-
-class PrintStudentDetails():
+class PrintStudentDetails(QWidget):
     def __init__(self):
         super().__init__()
         self.setWindowTitle('Student Details')
@@ -127,6 +109,25 @@ class PrintStudentDetails():
         button2 = QPushButton("Exit", self)
         button2.move(20, 100)
 
+class editDatabase(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Choose Database")
+        self.resize(200,200)
+        layout = QVBoxLayout()
+        self.setLayout(layout)
+        self.initUI()
+    def initUI(self):
+        button = QPushButton("Student Database", self)
+        button.move(20, 50)
+        button2 = QPushButton("Faculty Database", self)
+        button2.move(20, 100)
+        button2 = QPushButton("Faculty Database", self)
+        button2.move(20, 100)
+        button3 = QPushButton("Course Database", self)
+        button3.move(20, 50)
+
+
 
 
 class MainWindow(QMainWindow):
@@ -141,6 +142,7 @@ class MainWindow(QMainWindow):
         self.label1.move(180, 0)
         #self.showAddCourse(self)
         #self.showRemoveFlag(self)
+        self.showPrintStudentDetail(self)
         self.initUI()
 
     def initUI(self):
