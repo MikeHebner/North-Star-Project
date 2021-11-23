@@ -141,7 +141,7 @@ class MainWindow(QMainWindow):
         self.label1.move(180, 0)
         #self.showAddCourse(self)
         #self.showRemoveFlag(self)
-        self.showPrintStudentDetail(self)
+        #self.showPrintStudentDetail(self)
         self.initUI()
 
     def initUI(self):
@@ -161,7 +161,7 @@ class MainWindow(QMainWindow):
         pybutton3.move(20, 100)
 
         pybutton4 = QPushButton('Course', self)
-        pybutton4.clicked.connect(self.clickMethod)
+        pybutton4.clicked.connect(self.showAddCourse)
         pybutton4.resize(120, 40)
         pybutton4.move(20, 140)
 
@@ -171,19 +171,19 @@ class MainWindow(QMainWindow):
         pybutton5.move(160, 20)
 
         pybutton6 = QPushButton("Remove Flags", self)
-        pybutton6.clicked.connect(self.clickMethod)
+        pybutton6.clicked.connect(self.showRemoveFlag)
         pybutton6.resize(150, 40)
         pybutton6.move(160, 60)
 
         pybutton7 = QPushButton("Print Student Details", self)
-        pybutton7.clicked.connect(self.clickMethod)
+        pybutton7.clicked.connect(self.showPrintStudentDetail)
         pybutton7.resize(150, 40)
         pybutton7.move(160, 100)
 
     def clickMethod(self):
         print('Clicked Pyqt button.')
 
-    def showAddStudent(self, checked):
+    def showAddStudent(self):
         if self.w is None:
             self.w = AddStudent()
             self.w.show()
@@ -191,7 +191,7 @@ class MainWindow(QMainWindow):
             self.w.close()
             self.w = None
 
-    def showAddInstructor(self, checked):
+    def showAddInstructor(self):
         if self.w is None:
             self.w = AddInstructor()
             self.w.show()
@@ -199,7 +199,7 @@ class MainWindow(QMainWindow):
             self.w.close()
             self.w = None
 
-    def showEditDatabase(self, checked):
+    def showEditDatabase(self):
         if self.w is None:
             self.w = editDatabase()
             self.w.show()
@@ -207,7 +207,7 @@ class MainWindow(QMainWindow):
             self.w.close()
             self.w = None
 
-    def showAddCourse(self, checked):
+    def showAddCourse(self):
         if self.w is None:
             self.w = AddCourse()
             self.w.show()
@@ -215,7 +215,7 @@ class MainWindow(QMainWindow):
             self.w.close()
             self.w = None
 
-    def showRemoveFlag(self, checked):
+    def showRemoveFlag(self):
         if self.w is None:
             self.w = RemoveFlag()
             self.w.show()
@@ -223,7 +223,7 @@ class MainWindow(QMainWindow):
             self.w.close()
             self.w = None
 
-    def showPrintStudentDetail(self, checked):
+    def showPrintStudentDetail(self):
         if self.w is None:
             self.w = PrintStudentDetails()
             self.w.show()
