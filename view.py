@@ -8,7 +8,7 @@ import PyQt5.QtWidgets as qtw
 class AddStudent(QWidget):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle('Add Student')
+        self.setWindowTitle('Edit Student Database')
         self.resize(200, 200)
         layout = QVBoxLayout()
         self.setLayout(layout)
@@ -26,6 +26,9 @@ class AddStudent(QWidget):
         button = QPushButton("Add Student", self)
         button.resize(100, 30)
         button.move(20, 100)
+        button2 = QPushButton("Remove Student", self)
+        button2.resize(140, 30)
+        button2.move(20, 130)
 
 class AddInstructor(QWidget):
     def __init__(self):
@@ -46,6 +49,9 @@ class AddInstructor(QWidget):
         textbox2.resize(150, 30)
         button = QPushButton("Add Instructor", self)
         button.move(20, 100)
+        button2 = QPushButton("Remove Instructor", self)
+        button2.resize(140, 30)
+        button2.move(20, 130)
 
 class AddCourse(QWidget):
     def __init__(self):
@@ -120,12 +126,13 @@ class editDatabase(QWidget):
     def initUI(self):
         button = QPushButton("Student Database", self)
         button.move(20, 50)
+        button.resize()
         button2 = QPushButton("Faculty Database", self)
         button2.move(20, 100)
-        button2 = QPushButton("Faculty Database", self)
-        button2.move(20, 100)
+
         button3 = QPushButton("Course Database", self)
-        button3.move(20, 50)
+        button3.move(20, 150)
+
 
 
 
