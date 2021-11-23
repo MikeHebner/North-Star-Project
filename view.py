@@ -72,6 +72,24 @@ class AddCourse(QWidget):
         button = QPushButton("Add Course", self)
         button.move(20, 100)
 
+class RemoveFlag(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle('Remove Flag')
+        self.resize(200, 200)
+        layout = QVBoxLayout()
+        self.setLayout(layout)
+        self.initUi()
+    def initUi(self):
+        textbox = QLineEdit(self)
+        textbox.setPlaceholderText("Enter Student ID")
+        textbox.move(20, 20)
+        textbox.resize(150, 30)
+        button = QPushButton("Search", self)
+        button.move(20, 100)
+        button2 = QPushButton("Exit", self)
+        button2.move(20, 100)
+
 class editDatabase(QWidget):
     def __init__(self):
         super().__init__()
@@ -90,6 +108,26 @@ class editDatabase(QWidget):
         button3 = QPushButton("Course Database", self)
         button3.move(20, 50)
 
+class PrintStudentDetails():
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle('Student Details')
+        self.resize(200, 200)
+        layout = QVBoxLayout()
+        self.setLayout(layout)
+        self.initUi()
+
+    def initUi(self):
+        textbox = QLineEdit(self)
+        textbox.setPlaceholderText("Enter Student ID")
+        textbox.move(20, 20)
+        textbox.resize(150, 30)
+        button = QPushButton("Search", self)
+        button.move(20, 100)
+        button2 = QPushButton("Exit", self)
+        button2.move(20, 100)
+
+
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -101,7 +139,8 @@ class MainWindow(QMainWindow):
         self.label.move(40, 0)
         self.label1 = QLabel("Registration", self)
         self.label1.move(180, 0)
-        self.showAddCourse(self)
+        #self.showAddCourse(self)
+        #self.showRemoveFlag(self)
         self.initUI()
 
     def initUI(self):
@@ -170,6 +209,14 @@ class MainWindow(QMainWindow):
     def showAddCourse(self, checked):
         if self.w is None:
             self.w = AddCourse()
+            self.w.show()
+        else:
+            self.w.close()
+            self.w = None
+
+    def showRemoveFlag(self, checked):
+        if self.w is None:
+            self.w = RemoveFlag()
             self.w.show()
         else:
             self.w.close()
