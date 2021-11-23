@@ -88,7 +88,7 @@ class RemoveFlag(QWidget):
         button = QPushButton("Search", self)
         button.move(20, 100)
         button2 = QPushButton("Exit", self)
-        button2.move(20, 100)
+        button2.move(20, 125)
 
 class PrintStudentDetails(QWidget):
     def __init__(self):
