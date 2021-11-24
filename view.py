@@ -4,11 +4,10 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QComboBox, QWidget, QPush
 from PyQt5.QtCore import pyqtSlot, QSize
 import PyQt5.QtWidgets as qtw
 
-
 class AddStudent(QWidget):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle('Add Student')
+        self.setWindowTitle('Student Database')
         self.resize(200, 200)
         layout = QVBoxLayout()
         self.setLayout(layout)
@@ -24,8 +23,11 @@ class AddStudent(QWidget):
         textbox2.move(20, 60)
         textbox2.resize(150,30)
         button = QPushButton("Add Student", self)
-        button.resize(100, 30)
+        button.resize(150, 40)
         button.move(20, 100)
+        button2 = QPushButton("Remove Student", self)
+        button2.resize(150, 40)
+        button2.move(20, 140)
 
 class AddInstructor(QWidget):
     def __init__(self):
@@ -45,7 +47,11 @@ class AddInstructor(QWidget):
         textbox2.move(20, 60)
         textbox2.resize(150, 30)
         button = QPushButton("Add Instructor", self)
+        button.resize(150, 40)
         button.move(20, 100)
+        button2 = QPushButton("Remove Instructor", self)
+        button2.resize(150, 40)
+        button2.move(20, 140)
 
 class RegisterStudent(QWidget):
     def __init__(self):
@@ -109,8 +115,6 @@ class PrintStudentDetails(QWidget):
         button2 = QPushButton("Exit", self)
         button2.move(20, 125)
 
-
-
 class editDatabase(QWidget):
     def __init__(self):
         super().__init__()
@@ -127,8 +131,21 @@ class editDatabase(QWidget):
         button2.move(20, 150)
         button2.resize(145, 30)
 
-
-
+class editCourse(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Course")
+        self.resize(200,200)
+        layout = QVBoxLayout()
+        self.setLayout(layout)
+        self.initUI()
+    def initUI(self):
+        button = QPushButton("Student Database", self)
+        button.move(20, 100)
+        button.resize(145, 30)
+        button2 = QPushButton("Faculty Database", self)
+        button2.move(20, 150)
+        button2.resize(145, 30)
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -159,7 +176,7 @@ class MainWindow(QMainWindow):
         pybutton3.move(20, 100)
 
         pybutton4 = QPushButton('Course', self)
-        pybutton4.clicked.connect(self.clickMethod)
+        pybutton4.clicked.connect(self.showCourse)
         pybutton4.resize(120, 40)
         pybutton4.move(20, 140)
 
@@ -224,6 +241,14 @@ class MainWindow(QMainWindow):
     def showPrintStudentDetail(self):
         if self.w is None:
             self.w = PrintStudentDetails()
+            self.w.show()
+        else:
+            self.w.close()
+            self.w = None
+
+    def showCourse(self):
+        if self.w is None:
+            self.w = editCourse()
             self.w.show()
         else:
             self.w.close()
