@@ -115,7 +115,7 @@ class PrintStudentDetails(QWidget):
         button2 = QPushButton("Exit", self)
         button2.move(20, 125)
 
-class editDatabase(QWidget):
+class editSection(QWidget):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Choose Database")
@@ -171,7 +171,7 @@ class MainWindow(QMainWindow):
         pybutton2.move(20, 60)
 
         pybutton3 = QPushButton('Section', self)
-        pybutton3.clicked.connect(self.showEditDatabase)
+        pybutton3.clicked.connect(self.showSection)
         pybutton3.resize(120, 40)
         pybutton3.move(20, 100)
 
@@ -214,9 +214,9 @@ class MainWindow(QMainWindow):
             self.w.close()
             self.w = None
 
-    def showEditDatabase(self):
+    def showSection(self):
         if self.w is None:
-            self.w = editDatabase()
+            self.w = editSection()
             self.w.show()
         else:
             self.w.close()
