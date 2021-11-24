@@ -127,6 +127,7 @@ class editSection(QWidget):
         button = QPushButton("Student Database", self)
         button.move(20, 100)
         button.resize(145, 30)
+        button.setToolTip("Edits database")
         button2 = QPushButton("Faculty Database", self)
         button2.move(20, 150)
         button2.resize(145, 30)
@@ -257,6 +258,7 @@ class MainWindow(QMainWindow):
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
+    app.setStyle('Fusion')
     mainWin = MainWindow()
     mainWin.show()
     sys.exit(app.exec_())
