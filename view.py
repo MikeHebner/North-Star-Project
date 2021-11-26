@@ -7,11 +7,11 @@ import PyQt5.QtWidgets as qtw
 class AddStudent(QWidget):
     def __init__(self):
         super().__init__()
+        self.w = None
         self.setWindowTitle('Student Database')
         self.resize(200, 300)
         layout = QVBoxLayout()
         self.setLayout(layout)
-
         self.initUI()
 
     def initUI(self):
@@ -31,14 +31,39 @@ class AddStudent(QWidget):
         button2.resize(150, 40)
         button2.move(20, 140)
         button3 = QPushButton("Edit Student Info", self)
+        button3.clicked.connect(self.showStudentInfo)
         button3.resize(150, 40)
         button3.move(20, 180)
+
+    def showStudentInfo(self):
+        if self.w is None:
+            self.w = studentInfo()
+            self.w.show()
+        else:
+            self.w.close()
+            self.w = None
+
+class studentInfo(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle('Student Database')
+        self.resize(200, 300)
+        layout = QVBoxLayout()
+        self.setLayout(layout)
+        self.initUI()
+
+    def initUI(self):
+        textbox = QLineEdit(self)
+        textbox.setPlaceholderText("Enter Student Name")
+        textbox.move(20, 20)
+        textbox.resize(150, 30)
 
 class AddInstructor(QWidget):
     def __init__(self):
         super().__init__()
+        self.w = None
         self.setWindowTitle('Instructor Database')
-        self.resize(200, 200)
+        self.resize(200, 300)
         layout = QVBoxLayout()
         self.setLayout(layout)
         self.initUi()
@@ -57,7 +82,29 @@ class AddInstructor(QWidget):
         button2 = QPushButton("Remove Instructor", self)
         button2.resize(150, 40)
         button2.move(20, 140)
-
+        button3 = QPushButton("Edit Instructor Info", self)
+        button3.clicked.connect(self.showInstructorInfo)
+        button3.resize(150, 40)
+        button3.move(20, 180)
+    def showInstructorInfo(self):
+        if self.w is None:
+            self.w = instructorInfo()
+            self.w.show()
+        else:
+            self.w.close()
+            self.w = None
+class instructorInfo(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.w = None
+        self.setWindowTitle('Instructor Database')
+        self.resize(200, 300)
+        layout = QVBoxLayout()
+        self.setLayout(layout)
+        self.initUi()
+    def initUi(self):
+        textbox = QLineEdit(self)
+        textbox.setPlaceholderText("Enter Instructor Name")
 class RegisterStudent(QWidget):
     def __init__(self):
         super().__init__()
