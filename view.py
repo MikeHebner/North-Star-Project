@@ -31,7 +31,6 @@ class AddStudent(QWidget):
         button = QPushButton("Add Student", self)
         button.resize(150, 40)
         button.move(20, 100)
-        button.clicked.connect(self.addClick)
         button2 = QPushButton("Remove Student", self)
         button2.resize(150, 40)
         button2.move(20, 140)
@@ -440,7 +439,67 @@ class description(QWidget):
         button2.resize(150, 40)
         button2.move(20, 140)
 
+class unenrollStudent(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.w = None
+        self.setWindowTitle('Unenroll student')
+        self.resize(200, 200)
+        layout = QVBoxLayout()
+        self.setLayout(layout)
+        self.initUi()
+    def initUi(self):
+        textbox = QLineEdit(self)
+        textbox.setPlaceholderText("Enter Student ID")
+        textbox.move(20, 20)
+        textbox.resize(150, 30)
+        button = QPushButton("Search", self)
+        button.move(20, 100)
+        button.clicked.connect(self.showCourses)
+        button2 = QPushButton("Exit", self)
+        button2.move(20, 140)
+        button2.clicked.connect(lambda:self.close())
+    def showCourses(self):
+        if self.w is None:
+            self.w = courses()
+            self.w.show()
+        else:
+            self.w.close()
+            self.w = None
+class courses(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle('Student Details')
+        self.resize(500, 500)
+        layout = QVBoxLayout()
+        self.setLayout(layout)
+        self.initUI()
+        self.createTable()
 
+    def initUI(self):
+        semID = QLabel(self)
+        semID.setText("Semester ID & Description")
+        semID.move(150, 20)
+        semID.resize(150, 40)
+        semID.adjustSize()
+        studentDetails = QLabel(self)
+        studentDetails.setText("Student ID & Name")
+        studentDetails.move(150, 40)
+        studentDetails.resize(150, 40)
+        studentDetails.adjustSize()
+    def createTable(self):
+        table = QTableWidget(self)
+        table.setColumnCount(5)
+        table.move(0, 100)
+        table.resize(500, 300)
+        table.setHorizontalHeaderLabels(("Course Description;Course ID;Instructor;Credits;Course Flags").split(";"))
+        credits = QLineEdit(self)
+        credits.setPlaceholderText("Credits for semester")
+        credits.resize(150, 40)
+        credits.move(300, 400)
+        exit = QPushButton("OK", self)
+        exit.clicked.connect(lambda: self.close())
+        exit.move(300,450)
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -498,6 +557,11 @@ class MainWindow(QMainWindow):
         pybutton9.clicked.connect(self.showModifyDescription)
         pybutton9.resize(120, 40)
         pybutton9.move(20, 190)
+
+        pybutton10 = QPushButton("Unenroll Student", self)
+        pybutton10.clicked.connect(self.showUnenrollStudent)
+        pybutton10.resize(150, 40)
+        pybutton10.move(160, 150)
 
     def clickMethod(self):
         print('Clicked Pyqt button.')
@@ -565,7 +629,13 @@ class MainWindow(QMainWindow):
         else:
             self.w.close()
             self.w = None
-
+    def showUnenrollStudent(self):
+        if self.w is None:
+            self.w = unenrollStudent()
+            self.w.show()
+        else:
+            self.w.close()
+            self.w = None
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
