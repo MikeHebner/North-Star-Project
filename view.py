@@ -300,6 +300,14 @@ class studentDetails(QWidget):
         table.setColumnCount(5)
         table.move(0, 100)
         table.resize(500, 300)
+        table.setHorizontalHeaderLabels(("Course Description;Course ID;Instructor;Credits;Course Flags").split(";"))
+        credits = QLineEdit(self)
+        credits.setPlaceholderText("Credits for semester")
+        credits.resize(150, 40)
+        credits.move(300, 400)
+        exit = QPushButton("OK", self)
+        exit.clicked.connect(lambda: self.close())
+        exit.move(300,450)
 
 
 
