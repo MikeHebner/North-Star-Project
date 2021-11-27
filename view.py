@@ -1,6 +1,6 @@
 import sys
 from PyQt5 import QtWidgets, QtCore, QtGui
-from PyQt5.QtWidgets import QApplication, QMainWindow, QComboBox, QWidget, QPushButton, QLabel, QVBoxLayout, QLineEdit, QGridLayout, QTableWidget
+from PyQt5.QtWidgets import QApplication, QMainWindow, QComboBox, QWidget, QPushButton, QLabel, QVBoxLayout, QLineEdit, QGridLayout, QTableWidget, QCheckBox
 from PyQt5.QtCore import pyqtSlot, QSize, Qt
 import PyQt5.QtWidgets as qtw
 import sqlite3 as sql
@@ -436,11 +436,12 @@ class unenrollStudent(QWidget):
         else:
             self.w.close()
             self.w = None
+
 class courses(QWidget):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle('Student Details')
-        self.resize(500, 500)
+        self.setWindowTitle('Student Unenrollment')
+        self.resize(400, 400)
         layout = QVBoxLayout()
         self.setLayout(layout)
         self.initUI()
@@ -448,28 +449,28 @@ class courses(QWidget):
 
     def initUI(self):
         semID = QLabel(self)
-        semID.setText("Semester ID & Description")
-        semID.move(150, 20)
+        semID.setText("Student ID")
+        semID.move(100, 40)
         semID.resize(150, 40)
         semID.adjustSize()
         studentDetails = QLabel(self)
-        studentDetails.setText("Student ID & Name")
-        studentDetails.move(150, 40)
+        studentDetails.setText("Student Name")
+        studentDetails.move(200, 40)
         studentDetails.resize(150, 40)
         studentDetails.adjustSize()
+
     def createTable(self):
         table = QTableWidget(self)
-        table.setColumnCount(5)
-        table.move(0, 100)
-        table.resize(500, 300)
-        table.setHorizontalHeaderLabels(("Course Description;Course ID;Instructor;Credits;Course Flags").split(";"))
-        credits = QLineEdit(self)
-        credits.setPlaceholderText("Credits for semester")
-        credits.resize(150, 40)
-        credits.move(300, 400)
-        exit = QPushButton("OK", self)
+        table.setColumnCount(3)
+        table.move(50, 100)
+        table.resize(300, 200)
+        table.setHorizontalHeaderLabels(("Course;Section;Remove").split(";"))
+        exit = QPushButton("Exit", self)
         exit.clicked.connect(lambda: self.close())
-        exit.move(300,450)
+        exit.move(300,350)
+        unenroll = QPushButton("Unenroll", self)
+        unenroll.move(200, 350)
+
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
