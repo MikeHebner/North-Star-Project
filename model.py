@@ -37,6 +37,7 @@ class Student:
         try:
             q = "INSERT INTO Student(student_ID,student_name) VALUES (?,?)"
             cursor = conn.execute(q,(studentID,studentName))
+            conn.commit()
         except:
             print("That name or ID already exists in this table")
     @classmethod

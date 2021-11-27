@@ -1,32 +1,37 @@
 import sys
 from PyQt5 import QtWidgets, QtCore, QtGui
-from PyQt5.QtWidgets import QApplication, QMainWindow, QComboBox, QWidget, QPushButton, QLabel, QVBoxLayout, QLineEdit, QGridLayout, QTableWidget
+from PyQt5.QtWidgets import QApplication, QMainWindow, QComboBox, QWidget, QPushButton, QLabel, QVBoxLayout, QLineEdit, \
+    QGridLayout, QTableWidget
 from PyQt5.QtCore import pyqtSlot, QSize, Qt
 import PyQt5.QtWidgets as qtw
 import sqlite3 as sql
+import model
+
 
 class AddStudent(QWidget):
     def __init__(self):
         super().__init__()
+        self.textbox2 = QLineEdit(self)
+        self.textbox = QLineEdit(self)
         self.w = None
         self.setWindowTitle('Student Database')
         self.resize(200, 300)
         layout = QVBoxLayout()
         self.setLayout(layout)
         self.initUI()
+
     def initUI(self):
-        textbox = QLineEdit(self)
-        textbox.setPlaceholderText("Enter Student Name")
-        textbox.move(20, 20)
-        textbox.resize(150, 30)
-        textbox.setStyleSheet("border: 1px solid black;")
-        textbox2 = QLineEdit(self)
-        textbox2.setPlaceholderText("Enter Student ID")
-        textbox2.move(20, 60)
-        textbox2.resize(150,30)
+        self.textbox.setPlaceholderText("Enter Student Name")
+        self.textbox.move(20, 20)
+        self.textbox.resize(150, 30)
+        self.textbox.setStyleSheet("border: 1px solid black;")
+        self.textbox2.setPlaceholderText("Enter Student ID")
+        self.textbox2.move(20, 60)
+        self.textbox2.resize(150, 30)
         button = QPushButton("Add Student", self)
         button.resize(150, 40)
         button.move(20, 100)
+        button.clicked.connect(self.addClick)
         button2 = QPushButton("Remove Student", self)
         button2.resize(150, 40)
         button2.move(20, 140)
@@ -42,6 +47,13 @@ class AddStudent(QWidget):
         else:
             self.w.close()
             self.w = None
+
+    def addClick(self):
+        studentID = self.textbox2.text()
+        studentName = self.textbox.text()
+        print("Name:" + studentName + " ID:" + studentID)
+        model.Student.add(studentID, studentName)
+
 
 class studentSearch(QWidget):
     def __init__(self):
@@ -75,6 +87,7 @@ class studentSearch(QWidget):
             self.w.close()
             self.w = None
 
+
 class studentInfo(QWidget):
     def __init__(self):
         super().__init__()
@@ -100,7 +113,7 @@ class studentInfo(QWidget):
         textbox3.resize(150, 30)
         button = QPushButton("Delete", self)
         button.resize(150, 40)
-        button.move(20,150)
+        button.move(20, 150)
         button2 = QPushButton("Submit", self)
         button2.resize(150, 40)
         button2.move(20, 190)
@@ -108,6 +121,7 @@ class studentInfo(QWidget):
         button3.clicked.connect(lambda: self.close())
         button3.resize(150, 40)
         button3.move(20, 230)
+
 
 class AddInstructor(QWidget):
     def __init__(self):
@@ -118,6 +132,7 @@ class AddInstructor(QWidget):
         layout = QVBoxLayout()
         self.setLayout(layout)
         self.initUi()
+
     def initUi(self):
         textbox = QLineEdit(self)
         textbox.setPlaceholderText("Enter Instructor Name")
@@ -137,6 +152,7 @@ class AddInstructor(QWidget):
         button3.clicked.connect(self.showInstructorInfo)
         button3.resize(150, 40)
         button3.move(20, 180)
+
     def showInstructorInfo(self):
         if self.w is None:
             self.w = instructorInfo()
@@ -144,6 +160,7 @@ class AddInstructor(QWidget):
         else:
             self.w.close()
             self.w = None
+
 
 class instructorInfo(QWidget):
     def __init__(self):
@@ -154,6 +171,7 @@ class instructorInfo(QWidget):
         layout = QVBoxLayout()
         self.setLayout(layout)
         self.initUi()
+
     def initUi(self):
         textbox = QLineEdit(self)
         textbox.setPlaceholderText("Instructor ID")
@@ -173,6 +191,7 @@ class instructorInfo(QWidget):
         button3.clicked.connect(lambda: self.close())
         button3.resize(150, 40)
         button3.move(20, 230)
+
 
 class RegisterStudent(QWidget):
     def __init__(self):
@@ -200,6 +219,7 @@ class RegisterStudent(QWidget):
         button.move(20, 160)
         button.resize(150, 40)
 
+
 class RemoveFlag(QWidget):
     def __init__(self):
         super().__init__()
@@ -209,6 +229,7 @@ class RemoveFlag(QWidget):
         layout = QVBoxLayout()
         self.setLayout(layout)
         self.initUi()
+
     def initUi(self):
         textbox = QLineEdit(self)
         textbox.setPlaceholderText("Enter Student ID")
@@ -219,7 +240,7 @@ class RemoveFlag(QWidget):
         button.clicked.connect(self.showFlags)
         button2 = QPushButton("Exit", self)
         button2.move(20, 140)
-        button2.clicked.connect(lambda:self.close())
+        button2.clicked.connect(lambda: self.close())
 
     def showFlags(self):
         if self.w is None:
@@ -228,6 +249,7 @@ class RemoveFlag(QWidget):
         else:
             self.w.close()
             self.w = None
+
 
 class flagMenu(QWidget):
     def __init__(self):
@@ -243,6 +265,7 @@ class flagMenu(QWidget):
         textbox.setPlaceholderText("Enter Student Name")
         textbox.move(20, 20)
         textbox.resize(150, 30)
+
 
 class PrintStudentDetails(QWidget):
     def __init__(self):
@@ -274,6 +297,7 @@ class PrintStudentDetails(QWidget):
             self.w.close()
             self.w = None
 
+
 class studentDetails(QWidget):
     def __init__(self):
         super().__init__()
@@ -295,6 +319,7 @@ class studentDetails(QWidget):
         studentDetails.move(150, 40)
         studentDetails.resize(150, 40)
         studentDetails.adjustSize()
+
     def createTable(self):
         table = QTableWidget(self)
         table.setColumnCount(5)
@@ -307,18 +332,18 @@ class studentDetails(QWidget):
         credits.move(300, 400)
         exit = QPushButton("OK", self)
         exit.clicked.connect(lambda: self.close())
-        exit.move(300,450)
-
+        exit.move(300, 450)
 
 
 class editSection(QWidget):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Add Section")
-        self.resize(200,200)
+        self.resize(200, 200)
         layout = QVBoxLayout()
         self.setLayout(layout)
         self.initUI()
+
     def initUI(self):
         textbox = QLineEdit(self)
         textbox.setPlaceholderText("Enter Course ID")
@@ -336,14 +361,16 @@ class editSection(QWidget):
         button.move(20, 140)
         button.resize(150, 30)
 
+
 class editCourse(QWidget):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Course")
-        self.resize(200,200)
+        self.resize(200, 200)
         layout = QVBoxLayout()
         self.setLayout(layout)
         self.initUI()
+
     def initUI(self):
         textbox = QLineEdit(self)
         textbox.setPlaceholderText("Enter Course ID")
@@ -356,6 +383,7 @@ class editCourse(QWidget):
         button = QPushButton("Add Section to Course", self)
         button.move(20, 100)
         button.resize(150, 30)
+
 
 class modifyDescription(QWidget):
     def __init__(self):
@@ -383,6 +411,8 @@ class modifyDescription(QWidget):
         else:
             self.w.close()
             self.w = None
+
+
 class description(QWidget):
     def __init__(self):
         super().__init__()
@@ -409,6 +439,7 @@ class description(QWidget):
         button2 = QPushButton("ADD", self)
         button2.resize(150, 40)
         button2.move(20, 140)
+
 
 class MainWindow(QMainWindow):
     def __init__(self):
