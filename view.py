@@ -113,7 +113,6 @@ class studentInfo(QWidget):
         button3.resize(150, 40)
         button3.move(20, 230)
 
-
 class AddInstructor(QWidget):
     def __init__(self):
         super().__init__()
