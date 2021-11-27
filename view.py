@@ -7,7 +7,6 @@ import PyQt5.QtWidgets as qtw
 import sqlite3 as sql
 import model
 
-
 class AddStudent(QWidget):
     def __init__(self):
         super().__init__()
@@ -192,7 +191,6 @@ class instructorInfo(QWidget):
         button3.resize(150, 40)
         button3.move(20, 230)
 
-
 class RegisterStudent(QWidget):
     def __init__(self):
         super().__init__()
@@ -218,7 +216,6 @@ class RegisterStudent(QWidget):
         button = QPushButton("Register Student", self)
         button.move(20, 160)
         button.resize(150, 40)
-
 
 class RemoveFlag(QWidget):
     def __init__(self):
@@ -250,7 +247,6 @@ class RemoveFlag(QWidget):
             self.w.close()
             self.w = None
 
-
 class flagMenu(QWidget):
     def __init__(self):
         super().__init__()
@@ -265,7 +261,6 @@ class flagMenu(QWidget):
         textbox.setPlaceholderText("Enter Student Name")
         textbox.move(20, 20)
         textbox.resize(150, 30)
-
 
 class PrintStudentDetails(QWidget):
     def __init__(self):
@@ -296,7 +291,6 @@ class PrintStudentDetails(QWidget):
         else:
             self.w.close()
             self.w = None
-
 
 class studentDetails(QWidget):
     def __init__(self):
@@ -334,7 +328,6 @@ class studentDetails(QWidget):
         exit.clicked.connect(lambda: self.close())
         exit.move(300, 450)
 
-
 class editSection(QWidget):
     def __init__(self):
         super().__init__()
@@ -361,7 +354,6 @@ class editSection(QWidget):
         button.move(20, 140)
         button.resize(150, 30)
 
-
 class editCourse(QWidget):
     def __init__(self):
         super().__init__()
@@ -383,7 +375,6 @@ class editCourse(QWidget):
         button = QPushButton("Add Section to Course", self)
         button.move(20, 100)
         button.resize(150, 30)
-
 
 class modifyDescription(QWidget):
     def __init__(self):
@@ -412,7 +403,6 @@ class modifyDescription(QWidget):
             self.w.close()
             self.w = None
 
-
 class description(QWidget):
     def __init__(self):
         super().__init__()
@@ -439,7 +429,6 @@ class description(QWidget):
         button2 = QPushButton("ADD", self)
         button2.resize(150, 40)
         button2.move(20, 140)
-
 
 class unenrollStudent(QWidget):
     def __init__(self):
@@ -470,7 +459,6 @@ class unenrollStudent(QWidget):
         else:
             self.w.close()
             self.w = None
-
 
 class courses(QWidget):
     def __init__(self):
@@ -507,7 +495,6 @@ class courses(QWidget):
         exit = QPushButton("OK", self)
         exit.clicked.connect(lambda: self.close())
         exit.move(300, 450)
-
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -646,7 +633,6 @@ class MainWindow(QMainWindow):
         else:
             self.w.close()
             self.w = None
-
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
