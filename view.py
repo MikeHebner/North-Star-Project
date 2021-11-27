@@ -11,8 +11,6 @@ import model
 class AddStudent(QWidget):
     def __init__(self):
         super().__init__()
-        self.textbox2 = QLineEdit(self)
-        self.textbox = QLineEdit(self)
         self.w = None
         self.setWindowTitle('Student Database')
         self.resize(200, 300)
@@ -49,18 +47,6 @@ class AddStudent(QWidget):
             self.w.close()
             self.w = None
 
-    def addClick(self):
-        studentID = self.textbox2.text()
-        studentName = self.textbox.text()
-        print("Name:" + studentName + " ID:" + studentID)
-        model.Student.add(studentID, studentName)
-
-
-    def remClick(self):
-        studentID = self.textbox2.text()
-        model.Student.remove(studentID)
-
-
 class studentSearch(QWidget):
     def __init__(self):
         super().__init__()
@@ -92,7 +78,6 @@ class studentSearch(QWidget):
         else:
             self.w.close()
             self.w = None
-
 
 class studentInfo(QWidget):
     def __init__(self):
@@ -133,6 +118,8 @@ class AddInstructor(QWidget):
     def __init__(self):
         super().__init__()
         self.w = None
+        self.textbox2 = QLineEdit(self)
+        self.textbox = QLineEdit(self)
         self.setWindowTitle('Instructor Database')
         self.resize(200, 300)
         layout = QVBoxLayout()
@@ -166,7 +153,15 @@ class AddInstructor(QWidget):
         else:
             self.w.close()
             self.w = None
+    def addClick(self):
+        studentID = self.textbox2.text()
+        studentName = self.textbox.text()
+        print("Name:" + studentName + " ID:" + studentID)
+        model.Student.add(studentID, studentName)
 
+    def remClick(self):
+        studentID = self.textbox2.text()
+        model.Student.remove(studentID)
 
 class instructorInfo(QWidget):
     def __init__(self):
