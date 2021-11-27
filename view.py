@@ -1,4 +1,4 @@
-import sys
+import sys, model
 from PyQt5 import QtWidgets, QtCore, QtGui
 from PyQt5.QtWidgets import QApplication, QMainWindow, QComboBox, QWidget, QPushButton, QLabel, QVBoxLayout, QLineEdit, QGridLayout, QTableWidget, QCheckBox
 from PyQt5.QtCore import pyqtSlot, QSize, Qt
@@ -113,6 +113,8 @@ class AddInstructor(QWidget):
     def __init__(self):
         super().__init__()
         self.w = None
+        self.textbox = QLineEdit(self)
+        self.textbox2 = QLineEdit(self)
         self.setWindowTitle('Instructor Database')
         self.resize(200, 300)
         layout = QVBoxLayout()
@@ -144,6 +146,15 @@ class AddInstructor(QWidget):
         else:
             self.w.close()
             self.w = None
+    def addClick(self):
+        instructorID = self.textbox2.text()
+        instructorName = self.textbox.text()
+        print("Name:" + instructorName + " ID:" + instructorID)
+        model.add("i", instructorID, instructorName)
+
+    def remClick(self):
+        instructorID = self.textbox2.text()
+        model.Instructor.remove(instructorID)
 
 class instructorInfo(QWidget):
     def __init__(self):

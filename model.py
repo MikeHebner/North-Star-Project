@@ -1,9 +1,6 @@
 ## Still needs course class
-
 import sqlite3 as sql
-
 conn = sql.connect('identifier.sqlite')
-
 
 # test method, needs to be implemented for general use
 def printAllStudentsEnrolledSemester():
@@ -11,9 +8,7 @@ def printAllStudentsEnrolledSemester():
     for row in cursor:
         print(row)
 
-
 class Student:
-
     def __init__(self, student_id, student_name):
         self.student_id = student_id
         self.student_name = student_name
@@ -50,8 +45,6 @@ class Student:
         else:
             return 0
 
-
-
     @classmethod
     def editStudentInfo(self,studentName,studentID):
         if(1):
@@ -69,17 +62,15 @@ def add(status,ID,name):
         except:
             print("That name or ID already exists in this table")
 
-
-
     elif status=="instructor":
         try:
             q = "INSERT INTO Instructor(instructor_ID, instructor_name) VALUES (?,?)"
             conn.execute(q, (ID, name))
         except:
             print("That name or ID already exists in this table")
+
 def remove(status,name):
     if status == "student":
-
             q = "DELETE FROM Student WHERE student_name = (?)"
             conn.execute(q, (name,))
     elif status == "instructor":
@@ -96,8 +87,6 @@ x = Student.getAll()
 xSize = len(x)
 for i in range(xSize):
     print(x[i])
-
-
 
 class Instructor:
     def __init__(self, instructor_id, instructor_name):
