@@ -250,6 +250,16 @@ class RemoveFlag(QWidget):
             self.w.close()
             self.w = None
 
+def addClick(self):
+    instructorID = self.textbox2.text()
+    instructorName = self.textbox.text()
+    print("Name:" + instructorName + " ID:" + instructorID)
+    model.add("i",instructorID, instructorName)
+
+def remClick(self):
+    instructorID = self.textbox2.text()
+    model.Instructor.remove(instructorID)
+
 
 class flagMenu(QWidget):
     def __init__(self):
