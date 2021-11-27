@@ -132,6 +132,8 @@ class studentInfo(QWidget):
 class AddInstructor(QWidget):
     def __init__(self):
         super().__init__()
+        self.textbox = QLineEdit(self)
+        self.textbox2 = QLineEdit(self)
         self.w = None
         self.setWindowTitle('Instructor Database')
         self.resize(200, 300)
@@ -140,20 +142,20 @@ class AddInstructor(QWidget):
         self.initUi()
 
     def initUi(self):
-        textbox = QLineEdit(self)
-        textbox.setPlaceholderText("Enter Instructor Name")
-        textbox.move(20, 20)
-        textbox.resize(150, 30)
-        textbox2 = QLineEdit(self)
-        textbox2.setPlaceholderText("Enter Instructor ID")
-        textbox2.move(20, 60)
-        textbox2.resize(150, 30)
+        self.textbox.setPlaceholderText("Enter Instructor Name")
+        self.textbox.move(20, 20)
+        self.textbox.resize(150, 30)
+        self.textbox2.setPlaceholderText("Enter Instructor ID")
+        self.textbox2.move(20, 60)
+        self.textbox2.resize(150, 30)
         button = QPushButton("Add Instructor", self)
         button.resize(150, 40)
         button.move(20, 100)
+        button.clicked.connect(self.addClick)
         button2 = QPushButton("Remove Instructor", self)
         button2.resize(150, 40)
         button2.move(20, 140)
+        button2.clicked.connect(self.remClick)
         button3 = QPushButton("Edit Instructor Info", self)
         button3.clicked.connect(self.showInstructorInfo)
         button3.resize(150, 40)
@@ -167,6 +169,15 @@ class AddInstructor(QWidget):
             self.w.close()
             self.w = None
 
+    def addClick(self):
+        instructorID = self.textbox2.text()
+        instructorName = self.textbox.text()
+        print("Name:" + instructorName + " ID:" + instructorID)
+        model.add("i",instructorID, instructorName)
+
+    def remClick(self):
+        instructorID = self.textbox2.text()
+        model.Instructor.remove(instructorID)
 
 class instructorInfo(QWidget):
     def __init__(self):

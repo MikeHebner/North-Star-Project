@@ -65,7 +65,7 @@ class Student:
 
 
 def add(status, ID, name):
-    if status == "student":
+    if status == "s":
         try:
 
             q = "INSERT INTO Student(student_ID,student_name) VALUES (?,?)"
@@ -76,7 +76,7 @@ def add(status, ID, name):
 
 
 
-    elif status == "instructor":
+    elif status == "i":
         try:
             q = "INSERT INTO Instructor(instructor_ID, instructor_name) VALUES (?,?)"
             conn.execute(q, (ID, name))
@@ -126,6 +126,18 @@ class Instructor:
             instructor = Instructor(row[0], row[1])
             result.append(instructor)
         return result
+
+    @classmethod
+    def remove(cls, instructorID):
+        q2 = "SELECT * FROM Instructor WHERE instructor_ID = (?)"
+        response = conn.execute(q2, (instructorID,))
+        if len(response.fetchall()) > 0:
+            q = "DELETE FROM Instructor WHERE instructor_ID = (?)"
+            conn.execute(q, (instructorID,))
+            conn.commit()
+            return 1
+        else:
+            return 0
 
 
 y = Instructor.getAll()
