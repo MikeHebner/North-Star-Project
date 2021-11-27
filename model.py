@@ -2,7 +2,7 @@
 
 import sqlite3 as sql
 
-conn = sql.connect('identifier.sqlite')
+conn = sql.connect('db.sqlite')
 
 
 # test method, needs to be implemented for general use
@@ -37,7 +37,7 @@ class Student:
 
         try:
             q = "INSERT INTO Student(student_ID,student_name) VALUES (?,?)"
-            cursor = conn.execute(q, (studentID, studentName))
+            conn.execute(q, (studentID, studentName))
             conn.commit()
         except:
             print("That name or ID already exists in this table")
@@ -63,50 +63,50 @@ class Student:
             print("Please use either ID or name")
             # testing else statement
 
+#
+# def add(status, ID, name):
+#     if status == "s":
+#         try:
+#
+#             q = "INSERT INTO Student(student_ID,student_name) VALUES (?,?)"
+#             conn.execute(q, (ID, name))
+#             conn.commit()
+#         except:
+#             print("That name or ID already exists in this table")
+#
+#
+#
+#     elif status == "i":
+#         try:
+#             q = "INSERT INTO Instructor(instructor_ID, instructor_name) VALUES (?,?)"
+#             conn.execute(q, (ID, name))
+#             conn.commit()
+#         except:
+#             print("That name or ID already exists in this table")
+#
+#
+# def remove(status, name):
+#     if status == "student":
+#
+#         q = "DELETE FROM Student WHERE student_name = (?)"
+#         conn.execute(q, (name,))
+#         conn.commit()
+#     elif status == "instructor":
+#         q = "DELETE FROM Instructor WHERE instructor_name = (?)"
+#         conn.execute(q, (name,))
+#         conn.commit()
 
-def add(status, ID, name):
-    if status == "s":
-        try:
-
-            q = "INSERT INTO Student(student_ID,student_name) VALUES (?,?)"
-            conn.execute(q, (ID, name))
-            conn.commit()
-        except:
-            print("That name or ID already exists in this table")
-
-
-
-    elif status == "i":
-        try:
-            q = "INSERT INTO Instructor(instructor_ID, instructor_name) VALUES (?,?)"
-            conn.execute(q, (ID, name))
-            conn.commit()
-        except:
-            print("That name or ID already exists in this table")
-
-
-def remove(status, name):
-    if status == "student":
-
-        q = "DELETE FROM Student WHERE student_name = (?)"
-        conn.execute(q, (name,))
-        conn.commit()
-    elif status == "instructor":
-        q = "DELETE FROM Instructor WHERE instructor_name = (?)"
-        conn.execute(q, (name,))
-        conn.commit()
-
-
-add("student", 123, "Bobby")
-remove("student", "Bobby")
-Student.add(123, "Bobby")
-print(Student.remove("9045"))
-add("student", 123, "Bobby1")
-Student.editStudentInfo("OtherBobby", "123")
-x = Student.getAll()
-xSize = len(x)
-for i in range(xSize):
-    print(x[i])
+#
+# add("s", 123, "Bobby")
+# remove("student", "Bobby")
+# Student.add(123, "Bobby")
+# print(Student.remove("9045"))
+# add("student", 123, "Bobby1")
+# Student.editStudentInfo("OtherBobby", "123")
+# x = Student.getAll()
+# xSize = len(x)
+# for i in range(xSize):
+#     print(x[i])
 
 
 class Instructor:
@@ -128,6 +128,16 @@ class Instructor:
         return result
 
     @classmethod
+    def add(cls, instructorID, instructorName):
+
+        try:
+            q = "INSERT INTO main.Instructor(instructor_ID,instructor_name) VALUES (?,?)"
+            conn.execute(q, (instructorID, instructorName))
+            conn.commit()
+        except:
+            print("That name or ID already exists in this table")
+
+    @classmethod
     def remove(cls, instructorID):
         q2 = "SELECT * FROM Instructor WHERE instructor_ID = (?)"
         response = conn.execute(q2, (instructorID,))
@@ -140,7 +150,7 @@ class Instructor:
             return 0
 
 
-y = Instructor.getAll()
+#y = Instructor.getAll()
 
 
 class Enrollment:
@@ -148,6 +158,10 @@ class Enrollment:
         self.student_id = student_id
         self.section_id = section_id
         self.flag = None
+
+    def add(cls,student_id, section_id, flag):
+        q = "INSERT INTO Enrolls_in(flag, student_ID, course_link) VALUES (?,?,?)"
+
 
 
 class Section:
