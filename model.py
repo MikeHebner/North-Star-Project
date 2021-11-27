@@ -31,73 +31,82 @@ class Student:
             student = Student(row[0], row[1])
             result.append(student)
         return result
+
     @classmethod
-    def add(self,studentID,studentName):
+    def add(self, studentID, studentName):
 
         try:
             q = "INSERT INTO Student(student_ID,student_name) VALUES (?,?)"
-            cursor = conn.execute(q,(studentID,studentName))
+            cursor = conn.execute(q, (studentID, studentName))
             conn.commit()
         except:
             print("That name or ID already exists in this table")
+
     @classmethod
-    def remove(self,studentID):
+    def remove(self, studentID):
         q2 = "SELECT * FROM Student WHERE student_ID = (?)"
         response = conn.execute(q2, (studentID,))
-        if len(response.fetchall())>0:
+        if len(response.fetchall()) > 0:
             q = "DELETE FROM Student WHERE student_ID = (?)"
             conn.execute(q, (studentID,))
+            conn.commit()
             return 1
         else:
             return 0
 
-
-
     @classmethod
-    def editStudentInfo(self,studentName,studentID):
-        if(1):
+    def editStudentInfo(self, studentName, studentID):
+        if (1):
             q = "UPDATE Student Set student_name=(?) WHERE student_ID==(?)"
-            conn.execute(q, (studentName,studentID))
+            conn.execute(q, (studentName, studentID))
         else:
             print("Please use either ID or name")
-            #testing else statement
-def add(status,ID,name):
-    if status=="student":
+            # testing else statement
+
+
+def add(status, ID, name):
+    if status == "student":
         try:
 
             q = "INSERT INTO Student(student_ID,student_name) VALUES (?,?)"
             conn.execute(q, (ID, name))
+            conn.commit()
         except:
             print("That name or ID already exists in this table")
 
 
 
-    elif status=="instructor":
+    elif status == "instructor":
         try:
             q = "INSERT INTO Instructor(instructor_ID, instructor_name) VALUES (?,?)"
             conn.execute(q, (ID, name))
+            conn.commit()
         except:
             print("That name or ID already exists in this table")
-def remove(status,name):
+
+
+def remove(status, name):
     if status == "student":
 
-            q = "DELETE FROM Student WHERE student_name = (?)"
-            conn.execute(q, (name,))
+        q = "DELETE FROM Student WHERE student_name = (?)"
+        conn.execute(q, (name,))
+        conn.commit()
     elif status == "instructor":
         q = "DELETE FROM Instructor WHERE instructor_name = (?)"
         conn.execute(q, (name,))
+        conn.commit()
 
-add("student",123,"Bobby")
-remove("student","Bobby")
-Student.add(123,"Bobby")
+
+add("student", 123, "Bobby")
+remove("student", "Bobby")
+Student.add(123, "Bobby")
 print(Student.remove("9045"))
-add("student",123,"Bobby1")
-Student.editStudentInfo("OtherBobby","123")
+add("student", 123, "Bobby1")
+Student.editStudentInfo("OtherBobby", "123")
 x = Student.getAll()
 xSize = len(x)
 for i in range(xSize):
     print(x[i])
-
 
 
 class Instructor:

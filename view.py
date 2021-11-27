@@ -31,9 +31,11 @@ class AddStudent(QWidget):
         button = QPushButton("Add Student", self)
         button.resize(150, 40)
         button.move(20, 100)
+        button.clicked.connect(self.addClick)
         button2 = QPushButton("Remove Student", self)
         button2.resize(150, 40)
         button2.move(20, 140)
+        button2.clicked.connect(self.remClick)
         button3 = QPushButton("Edit Student Info", self)
         button3.clicked.connect(self.showStudentSearch)
         button3.resize(150, 40)
@@ -52,6 +54,11 @@ class AddStudent(QWidget):
         studentName = self.textbox.text()
         print("Name:" + studentName + " ID:" + studentID)
         model.Student.add(studentID, studentName)
+
+
+    def remClick(self):
+        studentID = self.textbox2.text()
+        model.Student.remove(studentID)
 
 
 class studentSearch(QWidget):
@@ -439,6 +446,7 @@ class description(QWidget):
         button2.resize(150, 40)
         button2.move(20, 140)
 
+
 class unenrollStudent(QWidget):
     def __init__(self):
         super().__init__()
@@ -448,6 +456,7 @@ class unenrollStudent(QWidget):
         layout = QVBoxLayout()
         self.setLayout(layout)
         self.initUi()
+
     def initUi(self):
         textbox = QLineEdit(self)
         textbox.setPlaceholderText("Enter Student ID")
@@ -458,7 +467,8 @@ class unenrollStudent(QWidget):
         button.clicked.connect(self.showCourses)
         button2 = QPushButton("Exit", self)
         button2.move(20, 140)
-        button2.clicked.connect(lambda:self.close())
+        button2.clicked.connect(lambda: self.close())
+
     def showCourses(self):
         if self.w is None:
             self.w = courses()
@@ -466,6 +476,8 @@ class unenrollStudent(QWidget):
         else:
             self.w.close()
             self.w = None
+
+
 class courses(QWidget):
     def __init__(self):
         super().__init__()
@@ -487,6 +499,7 @@ class courses(QWidget):
         studentDetails.move(150, 40)
         studentDetails.resize(150, 40)
         studentDetails.adjustSize()
+
     def createTable(self):
         table = QTableWidget(self)
         table.setColumnCount(5)
@@ -499,7 +512,9 @@ class courses(QWidget):
         credits.move(300, 400)
         exit = QPushButton("OK", self)
         exit.clicked.connect(lambda: self.close())
-        exit.move(300,450)
+        exit.move(300, 450)
+
+
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -629,6 +644,7 @@ class MainWindow(QMainWindow):
         else:
             self.w.close()
             self.w = None
+
     def showUnenrollStudent(self):
         if self.w is None:
             self.w = unenrollStudent()
@@ -636,6 +652,7 @@ class MainWindow(QMainWindow):
         else:
             self.w.close()
             self.w = None
+
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
