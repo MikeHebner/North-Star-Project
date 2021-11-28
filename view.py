@@ -93,7 +93,6 @@ class studentSearch(QWidget):
             self.w.close()
             self.w = None
 
-
 class studentInfo(QWidget):
     def __init__(self):
         super().__init__()
@@ -128,13 +127,12 @@ class studentInfo(QWidget):
         button3.resize(150, 40)
         button3.move(20, 230)
 
-
 class AddInstructor(QWidget):
     def __init__(self):
         super().__init__()
-        self.textbox = QLineEdit(self)
-        self.textbox2 = QLineEdit(self)
         self.w = None
+        self.textbox2 = QLineEdit(self)
+        self.textbox = QLineEdit(self)
         self.setWindowTitle('Instructor Database')
         self.resize(200, 300)
         layout = QVBoxLayout()
@@ -151,11 +149,9 @@ class AddInstructor(QWidget):
         button = QPushButton("Add Instructor", self)
         button.resize(150, 40)
         button.move(20, 100)
-        button.clicked.connect(self.addClick)
         button2 = QPushButton("Remove Instructor", self)
         button2.resize(150, 40)
         button2.move(20, 140)
-        button2.clicked.connect(self.remClick)
         button3 = QPushButton("Edit Instructor Info", self)
         button3.clicked.connect(self.showInstructorInfo)
         button3.resize(150, 40)
@@ -168,16 +164,15 @@ class AddInstructor(QWidget):
         else:
             self.w.close()
             self.w = None
-
     def addClick(self):
-        instructorID = self.textbox2.text()
-        instructorName = self.textbox.text()
-        print("Name:" + instructorName + " ID:" + instructorID)
-        model.add("i",instructorID, instructorName)
+        studentID = self.textbox2.text()
+        studentName = self.textbox.text()
+        print("Name:" + studentName + " ID:" + studentID)
+        model.Student.add(studentID, studentName)
 
     def remClick(self):
-        instructorID = self.textbox2.text()
-        model.Instructor.remove(instructorID)
+        studentID = self.textbox2.text()
+        model.Student.remove(studentID)
 
 class instructorInfo(QWidget):
     def __init__(self):
@@ -266,6 +261,16 @@ class RemoveFlag(QWidget):
         else:
             self.w.close()
             self.w = None
+
+def addClick(self):
+    instructorID = self.textbox2.text()
+    instructorName = self.textbox.text()
+    print("Name:" + instructorName + " ID:" + instructorID)
+    model.add("i",instructorID, instructorName)
+
+def remClick(self):
+    instructorID = self.textbox2.text()
+    model.Instructor.remove(instructorID)
 
 
 class flagMenu(QWidget):
