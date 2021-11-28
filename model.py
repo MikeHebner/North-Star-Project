@@ -56,12 +56,16 @@ class Student:
 
     @classmethod
     def editStudentInfo(self, studentName, studentID):
-        if (1):
+        rq = "SELECT * FROM Student WHERE student_ID = (?)"
+
+        response = conn.execute(rq, (studentID,))
+        if (len(response.fetchall()) > 0):
             q = "UPDATE Student Set student_name=(?) WHERE student_ID==(?)"
             conn.execute(q, (studentName, studentID))
+            return 1
         else:
-            print("Please use either ID or name")
-            # testing else statement
+            return 0
+            # No ID of that in student
 
 #
 # def add(status, ID, name):
@@ -149,9 +153,23 @@ class Instructor:
         else:
             return 0
 
+    @classmethod
+    def editInstructorInfo(cls,instructorName,instructorID):
+        q = "SELECT * FROM Instructor WHERE instructor_ID = (?)"
+        response = conn.execute(q, (instructorID,))
+        if len(response.fetchall()) > 0:
+            q2 = "UPDATE Instructor Set instructor_name=(?) WHERE instructor_ID==(?)"
+            conn.execute(q2, (instructorName, instructorID))
+            conn.commit()
+            return 1
+        else:
+            return 0
 
-#y = Instructor.getAll()
-
+Instructor.editInstructor("Kelly Manso",60)
+x = Instructor.getAll()
+xSize = len(x)
+for i in range(xSize):
+     print(x[i])
 
 class Enrollment:
     def __init__(self, student_id, section_id):
