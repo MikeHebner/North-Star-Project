@@ -123,11 +123,7 @@ class Instructor:
         else:
             return 0
 
-#Instructor.editInstructor("Kelly Manso",60)
-x = Instructor.getAll()
-xSize = len(x)
-for i in range(xSize):
-     print(x[i])
+
 
 class Enrollment:
     def __init__(self, student_id, section_id):
@@ -139,15 +135,14 @@ class Enrollment:
     def getCourseLink(cls, section_id, course_id):
         q = "SELECT course_link FROM Section WHERE section_ID=? AND course_ID=?"
         cursor = conn.execute(q,(section_id,course_id))
-        if len(cursor)<1:
-            return 0
-        else:
-            cursor.fetchall()
-            return cursor.fetchall()[0]
+        link = cursor.fetchone()
+        return link[0]
 
+    @classmethod
     def add(cls,flag, student_id, course_link):
         q = "INSERT INTO Enrolls_in(flag, student_ID, course_link) VALUES (?,?,?)"
         conn.execute(q,(flag,student_id,course_link))
+        conn.commit()
 
     @classmethod
     def checkCap(cls,course_link):
@@ -155,7 +150,14 @@ class Enrollment:
         capacity = conn.execute(q, course_link)
         return capacity.fetchall()[0]
 
+    @classmethod
+    def checkDuplicate(cls,student_id,course_link):
+        q = "SELECT COUNT(*) FROM Enrolls_in WHERE student_ID=? AND course_link=?"
+        response = conn.execute(q,(student_id,course_link))
+        return response.fetchone()[0]
 
+x = Enrollment.checkDuplicate(1,1)
+print(x)
 class Section:
     def __init__(self, course_link, section_id, capacity,course_id, instructor_id ):
         self.course_link = course_link

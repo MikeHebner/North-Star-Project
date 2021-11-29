@@ -215,6 +215,8 @@ class RegisterStudent(QWidget):
         super().__init__()
         self.setWindowTitle('Add Student Course')
         self.resize(200, 200)
+        self.label = QLabel(self)
+
         self.textbox = QLineEdit(self)
         self.textbox2 = QLineEdit(self)
         self.textbox3 = QLineEdit(self)
@@ -223,13 +225,14 @@ class RegisterStudent(QWidget):
         self.initUi()
 
     def initUi(self):
+        self.label.move(20, 5)
+        self.label.resize(150, 30)
         self.textbox.setPlaceholderText("Enter Course ID")
         self.textbox.move(20, 20)
         self.textbox.resize(160, 30)
         self.textbox2.setPlaceholderText("Enter Student ID")
         self.textbox2.move(20, 60)
         self.textbox2.resize(160, 30)
-        self.textbox3 = QLineEdit(self)
         self.textbox3.setPlaceholderText("Enter Course Section ID")
         self.textbox3.move(20, 100)
         self.textbox3.resize(160, 30)
@@ -244,12 +247,18 @@ class RegisterStudent(QWidget):
         sectionID = self.textbox3.text()
         studentID = self.textbox2.text()
         flag = None
-        course_link = model.Enrollment.getCourseLink(sectionID, courseID)[0]
+        course_link = model.Enrollment.getCourseLink(sectionID, courseID)
         course_link = str(course_link)
-        sa = model.Enrollment.checkCap(course_link)[0]
-        if int(sa)<1:
-            print("OVER CAPACITY FLAG")
-            flag = "EXCESS CRED"
+        duplicateCheck = model.Enrollment.checkDuplicate(studentID, course_link)
+        if duplicateCheck>0:
+            self.label.setText("Student already enrolled")
+        else:
+            sa = model.Enrollment.checkCap(course_link)[0]
+            if int(sa)<1:
+                print("OVER CAPACITY FLAG")
+                flag = "EXCESS CRED"
+            else:
+                model.Enrollment.add(flag,studentID,course_link)
 
 
 
