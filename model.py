@@ -165,7 +165,7 @@ class Instructor:
         else:
             return 0
 
-Instructor.editInstructor("Kelly Manso",60)
+#Instructor.editInstructor("Kelly Manso",60)
 x = Instructor.getAll()
 xSize = len(x)
 for i in range(xSize):
