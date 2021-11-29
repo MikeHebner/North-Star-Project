@@ -215,26 +215,32 @@ class RegisterStudent(QWidget):
         super().__init__()
         self.setWindowTitle('Add Student Course')
         self.resize(200, 200)
+        self.textbox = QLineEdit(self)
+        self.textbox2 = QLineEdit(self)
+        self.textbox3 = QLineEdit(self)
         layout = QVBoxLayout()
         self.setLayout(layout)
         self.initUi()
 
     def initUi(self):
-        textbox = QLineEdit(self)
-        textbox.setPlaceholderText("Enter Course ID")
-        textbox.move(20, 20)
-        textbox.resize(160, 30)
-        textbox2 = QLineEdit(self)
-        textbox2.setPlaceholderText("Enter Student ID")
-        textbox2.move(20, 60)
-        textbox2.resize(160, 30)
-        textbox3 = QLineEdit(self)
-        textbox3.setPlaceholderText("Enter Course Section ID")
-        textbox3.move(20, 100)
-        textbox3.resize(160, 30)
+        self.textbox.setPlaceholderText("Enter Course ID")
+        self.textbox.move(20, 20)
+        self.textbox.resize(160, 30)
+        self.textbox2.setPlaceholderText("Enter Student ID")
+        self.textbox2.move(20, 60)
+        self.textbox2.resize(160, 30)
+        self.textbox3 = QLineEdit(self)
+        self.textbox3.setPlaceholderText("Enter Course Section ID")
+        self.textbox3.move(20, 100)
+        self.textbox3.resize(160, 30)
         button = QPushButton("Register Student", self)
         button.move(20, 160)
         button.resize(150, 40)
+
+    def addClick(self):
+        courseID = self.textbox.text()
+        sectionID = self.textbox3.text()
+        studentID = self.textbox2.text()
 
 
 class RemoveFlag(QWidget):
@@ -300,9 +306,11 @@ class flagMenu(QWidget):
     def createTable(self):
         table = QTableWidget(self)
         table.setColumnCount(3)
-        table.move(0, 100)
+        table.setColumnWidth(0,170)
+        table.move(10, 100)
         table.resize(500, 300)
         table.setHorizontalHeaderLabels(("Course Description;Section;Course Flags").split(";"))
+
         exit = QPushButton("OK", self)
         exit.clicked.connect(lambda: self.close())
         exit.move(300, 450)

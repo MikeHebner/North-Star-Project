@@ -177,13 +177,25 @@ class Enrollment:
         self.section_id = section_id
         self.flag = None
 
-    def add(cls,student_id, section_id, flag):
+
+    def getCourseLink(self, section_id, course_id):
+        q = "SELECT course_link FROM Section WHERE section_ID=? AND course_ID=?"
+        cursor = conn.execute(q,(section_id,course_id))
+        return cursor
+
+    def add(cls,flag, student_id, course_link):
         q = "INSERT INTO Enrolls_in(flag, student_ID, course_link) VALUES (?,?,?)"
 
 
+    def checkCap(self,section_id):
+        q = "SELECT capacity FROM Section WHERE "
+
 
 class Section:
-    def __init__(self, section_id, capacity, credits):
+    def __init__(self, course_link, section_id, capacity,course_id, instructor_id ):
+        self.course_link = course_link
         self.section_id = section_id
         self.capacity = capacity
-        self.credits = credits
+        self.course_id = course_id
+        self.instructor_id = instructor_id
+
