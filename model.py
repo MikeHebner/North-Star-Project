@@ -139,7 +139,11 @@ class Enrollment:
     def getCourseLink(cls, section_id, course_id):
         q = "SELECT course_link FROM Section WHERE section_ID=? AND course_ID=?"
         cursor = conn.execute(q,(section_id,course_id))
-        return cursor.fetchall()[0]
+        if len(cursor)<1:
+            return 0
+        else:
+            cursor.fetchall()
+            return cursor.fetchall()[0]
 
     def add(cls,flag, student_id, course_link):
         q = "INSERT INTO Enrolls_in(flag, student_ID, course_link) VALUES (?,?,?)"
