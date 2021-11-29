@@ -321,10 +321,15 @@ class flagMenu(QWidget):
         table.move(10, 100)
         table.resize(400, 300)
         table.setHorizontalHeaderLabels(("Course Description;Section;Course Flags").split(";"))
-
+        option = QLineEdit(self)
+        option.setPlaceholderText("Enter section of flagged course")
+        option.move(300, 400)
+        option.resize(175, 40)
+        remove = QPushButton("Remove", self)
+        remove.move(300, 450)
         exit = QPushButton("OK", self)
         exit.clicked.connect(lambda: self.close())
-        exit.move(300, 450)
+        exit.move(150, 450)
 
     def popRows(self):
         return
