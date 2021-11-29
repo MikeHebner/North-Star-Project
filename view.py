@@ -294,16 +294,16 @@ class RemoveFlag(QWidget):
             self.w = None
 
 
-def addClick(self):
-    instructorID = self.textbox2.text()
-    instructorName = self.textbox.text()
-    print("Name:" + instructorName + " ID:" + instructorID)
-    model.add("i", instructorID, instructorName)
+    def addClick(self):
+        instructorID = self.textbox2.text()
+        instructorName = self.textbox.text()
+        print("Name:" + instructorName + " ID:" + instructorID)
+        model.add("i", instructorID, instructorName)
 
 
-def remClick(self):
-    instructorID = self.textbox2.text()
-    model.Instructor.remove(instructorID)
+    def remClick(self):
+        instructorID = self.textbox2.text()
+        model.Instructor.remove(instructorID)
 
 
 class flagMenu(QWidget):
@@ -328,12 +328,17 @@ class flagMenu(QWidget):
         table.setColumnCount(3)
         table.setColumnWidth(0,170)
         table.move(10, 100)
-        table.resize(500, 300)
+        table.resize(400, 300)
         table.setHorizontalHeaderLabels(("Course Description;Section;Course Flags").split(";"))
-
+        option = QLineEdit(self)
+        option.setPlaceholderText("Enter section of flagged course")
+        option.move(300, 400)
+        option.resize(175, 40)
+        remove = QPushButton("Remove", self)
+        remove.move(300, 450)
         exit = QPushButton("OK", self)
         exit.clicked.connect(lambda: self.close())
-        exit.move(300, 450)
+        exit.move(150, 450)
 
     def popRows(self):
         return
@@ -517,7 +522,7 @@ class unenrollStudent(QWidget):
     def __init__(self):
         super().__init__()
         self.w = None
-        self.setWindowTitle('Unenroll student')
+        self.setWindowTitle('Unenroll Student')
         self.resize(200, 200)
         layout = QVBoxLayout()
         self.setLayout(layout)
@@ -547,7 +552,7 @@ class unenrollStudent(QWidget):
 class courses(QWidget):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle('Student Details')
+        self.setWindowTitle('Student Unenrollment')
         self.resize(500, 500)
         layout = QVBoxLayout()
         self.setLayout(layout)
@@ -556,29 +561,33 @@ class courses(QWidget):
 
     def initUI(self):
         semID = QLabel(self)
-        semID.setText("Semester ID & Description")
+        semID.setText("Student ID")
         semID.move(150, 20)
         semID.resize(150, 40)
         semID.adjustSize()
         studentDetails = QLabel(self)
-        studentDetails.setText("Student ID & Name")
+        studentDetails.setText("Student Name")
         studentDetails.move(150, 40)
         studentDetails.resize(150, 40)
         studentDetails.adjustSize()
 
     def createTable(self):
         table = QTableWidget(self)
-        table.setColumnCount(5)
+        table.setColumnCount(3)
         table.move(0, 100)
-        table.resize(500, 300)
-        table.setHorizontalHeaderLabels(("Course Description;Course ID;Instructor;Credits;Course Flags").split(";"))
+        table.resize(300, 300)
+        table.setHorizontalHeaderLabels(("Course;Course Section;Remove").split(";"))
         credits = QLineEdit(self)
-        credits.setPlaceholderText("Credits for semester")
+        credits.setPlaceholderText("Enter course to be removed")
         credits.resize(150, 40)
         credits.move(300, 400)
+        unenroll = QPushButton("Unenroll", self)
+        unenroll.resize(150, 40)
+        unenroll.move(300, 450)
         exit = QPushButton("OK", self)
+        exit.resize(150,40)
         exit.clicked.connect(lambda: self.close())
-        exit.move(300, 450)
+        exit.move(150, 450)
 
 
 class MainWindow(QMainWindow):
