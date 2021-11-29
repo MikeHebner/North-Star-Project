@@ -67,50 +67,8 @@ class Student:
             return 0
             # No ID of that in student
 
-#
-# def add(status, ID, name):
-#     if status == "s":
-#         try:
-#
-#             q = "INSERT INTO Student(student_ID,student_name) VALUES (?,?)"
-#             conn.execute(q, (ID, name))
-#             conn.commit()
-#         except:
-#             print("That name or ID already exists in this table")
-#
-#
-#
-#     elif status == "i":
-#         try:
-#             q = "INSERT INTO Instructor(instructor_ID, instructor_name) VALUES (?,?)"
-#             conn.execute(q, (ID, name))
-#             conn.commit()
-#         except:
-#             print("That name or ID already exists in this table")
-#
-#
-# def remove(status, name):
-#     if status == "student":
-#
-#         q = "DELETE FROM Student WHERE student_name = (?)"
-#         conn.execute(q, (name,))
-#         conn.commit()
-#     elif status == "instructor":
-#         q = "DELETE FROM Instructor WHERE instructor_name = (?)"
-#         conn.execute(q, (name,))
-#         conn.commit()
-
-#
-# add("s", 123, "Bobby")
-# remove("student", "Bobby")
-# Student.add(123, "Bobby")
-# print(Student.remove("9045"))
-# add("student", 123, "Bobby1")
-# Student.editStudentInfo("OtherBobby", "123")
-# x = Student.getAll()
-# xSize = len(x)
-# for i in range(xSize):
-#     print(x[i])
+    def getEnrolledCreds(self,studentID):
+        q = "SELECT "
 
 
 class Instructor:
@@ -177,18 +135,21 @@ class Enrollment:
         self.section_id = section_id
         self.flag = None
 
-
-    def getCourseLink(self, section_id, course_id):
+    @classmethod
+    def getCourseLink(cls, section_id, course_id):
         q = "SELECT course_link FROM Section WHERE section_ID=? AND course_ID=?"
         cursor = conn.execute(q,(section_id,course_id))
-        return cursor
+        return cursor.fetchall()[0]
 
     def add(cls,flag, student_id, course_link):
         q = "INSERT INTO Enrolls_in(flag, student_ID, course_link) VALUES (?,?,?)"
+        conn.execute(q,(flag,student_id,course_link))
 
-
-    def checkCap(self,section_id):
-        q = "SELECT capacity FROM Section WHERE "
+    @classmethod
+    def checkCap(cls,course_link):
+        q = "SELECT capacity FROM Section WHERE course_link=?"
+        capacity = conn.execute(q, course_link)
+        return capacity.fetchall()[0]
 
 
 class Section:

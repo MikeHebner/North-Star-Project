@@ -236,11 +236,22 @@ class RegisterStudent(QWidget):
         button = QPushButton("Register Student", self)
         button.move(20, 160)
         button.resize(150, 40)
+        button.clicked.connect(self.addClick)
 
     def addClick(self):
         courseID = self.textbox.text()
+        courseID = courseID.upper()
         sectionID = self.textbox3.text()
         studentID = self.textbox2.text()
+        flag = None
+        course_link = model.Enrollment.getCourseLink(sectionID, courseID)[0]
+        course_link = str(course_link)
+        sa = model.Enrollment.checkCap(course_link)
+        if sa<1:
+            print("OVER CAPACITY FLAG")
+            flag = "EXCESS CRED"
+
+
 
 
 class RemoveFlag(QWidget):
