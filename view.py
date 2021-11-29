@@ -116,8 +116,6 @@ class AddInstructor(QWidget):
     def __init__(self):
         super().__init__()
         self.w = None
-        self.textbox2 = QLineEdit(self)
-        self.textbox = QLineEdit(self)
         self.setWindowTitle('Instructor Database')
         self.resize(200, 300)
         layout = QVBoxLayout()
