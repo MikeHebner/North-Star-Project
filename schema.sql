@@ -39,7 +39,7 @@ CREATE TABLE Section
 DROP TABLE IF EXISTS Enrolls_in;
 CREATE TABLE Enrolls_in
 (
-  flag VARCHAR NOT NULL,
+  flag VARCHAR,
   student_ID INT NOT NULL,
   course_link INT NOT NULL,
   PRIMARY KEY (student_ID, course_link),
