@@ -1,7 +1,7 @@
 import sys
 from PyQt5 import QtWidgets, QtCore, QtGui
 from PyQt5.QtWidgets import QApplication, QMainWindow, QComboBox, QWidget, QPushButton, QLabel, QVBoxLayout, QLineEdit, \
-    QGridLayout, QTableWidget
+    QGridLayout, QTableWidget, QTableWidgetItem
 from PyQt5.QtCore import pyqtSlot, QSize, Qt
 import PyQt5.QtWidgets as qtw
 import sqlite3 as sql
@@ -400,12 +400,16 @@ class studentDetails(QWidget):
 
     def createTable(self):
         data = model.Enrollment.getEnrolledCourses(self.student_id)
+        rowCount = model.Enrollment.enrolledCount(self.student_id)
         table = QTableWidget(self)
         table.setColumnCount(5)
-        table.setRowCount(model.Enrollment.enrolledCount(self.student_id))
+        table.setRowCount(rowCount)
         table.move(0, 100)
         table.resize(500, 300)
         table.setHorizontalHeaderLabels(("Course Description;Course ID;Instructor;Credits;Course Flags").split(";"))
+        for i in range(rowCount):
+            for j in range(5):
+                table.setItem(i, j, QTableWidgetItem(str(data[i][j])))
         credits = QLineEdit(self)
         credits.setPlaceholderText("Credits for semester")
         credits.resize(150, 40)
