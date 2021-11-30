@@ -187,6 +187,17 @@ class Enrollment:
         return enrollmentInfo.fetchall()
 
     @classmethod
+    def getEnrollmentDetails(cls,student_id):
+        q = "SELECT description, course_ID, instructor_name, credits, flag FROM Enrolls_in " \
+            "JOIN Section USING(course_link) " \
+            "JOIN Course USING(course_ID) " \
+            "JOIN main.Instructor " \
+            "USING(instructor_ID)" \
+            "WHERE student_ID=?"
+        enrollmentDetails = conn.execute(q,(student_id,))
+        return enrollmentDetails.fetchall()
+
+    @classmethod
     def enrolledCount(cls,student_id):
         q = "SELECT COUNT(*) FROM main.Enrolls_in " \
             "WHERE Enrolls_in.student_ID=?"

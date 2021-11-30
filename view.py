@@ -379,7 +379,7 @@ class studentDetails(QWidget):
         super().__init__()
         self.student_id = student_id
         self.setWindowTitle('Student Details')
-        self.resize(500, 500)
+        self.resize(700, 700)
         layout = QVBoxLayout()
         self.setLayout(layout)
         self.initUI()
@@ -399,17 +399,20 @@ class studentDetails(QWidget):
         studentDetails.adjustSize()
 
     def createTable(self):
-        data = model.Enrollment.getEnrolledCourses(self.student_id)
+        data = model.Enrollment.getEnrollmentDetails(self.student_id)
         rowCount = model.Enrollment.enrolledCount(self.student_id)
         table = QTableWidget(self)
         table.setColumnCount(5)
         table.setRowCount(rowCount)
         table.move(0, 100)
-        table.resize(500, 300)
+        table.setMinimumSize(700,500)
+
         table.setHorizontalHeaderLabels(("Course Description;Course ID;Instructor;Credits;Course Flags").split(";"))
         for i in range(rowCount):
             for j in range(5):
                 table.setItem(i, j, QTableWidgetItem(str(data[i][j])))
+        table.resizeColumnsToContents()
+        table.resizeRowsToContents()
         credits = QLineEdit(self)
         credits.setPlaceholderText("Credits for semester")
         credits.resize(150, 40)
