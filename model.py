@@ -124,11 +124,11 @@ class Instructor:
             return 0
 
 
-Instructor.editInstructorInfo("Kelly Manso", 60)
-x = Instructor.getAll()
-xSize = len(x)
-for i in range(xSize):
-    print(x[i])
+# Instructor.editInstructorInfo("Kelly Manso", 60)
+# x = Instructor.getAll()
+# xSize = len(x)
+# for i in range(xSize):
+#     print(x[i])
 
 
 class Enrollment:
@@ -137,12 +137,13 @@ class Enrollment:
         self.section_id = section_id
         self.flag = None
 
+    # Returns course_link for given course section
     @classmethod
     def getCourseLink(cls, section_id, course_id):
         q = "SELECT course_link FROM Section WHERE section_ID=? AND course_ID=?"
         cursor = conn.execute(q, (section_id, course_id))
         link = cursor.fetchone()
-        return link[0]
+        return link
 
     @classmethod
     def add(cls, flag, student_id, course_link):
@@ -150,20 +151,26 @@ class Enrollment:
         conn.execute(q, (flag, student_id, course_link))
         conn.commit()
 
+    # Returns (int) capacity of course section
     @classmethod
     def checkCap(cls, course_link):
         q = "SELECT capacity FROM Section WHERE course_link=?"
-        capacity = conn.execute(q, course_link)
-        return capacity.fetchall()[0]
+        capacity = conn.execute(q, (course_link,))
+        return capacity.fetchall()
 
+    # Checks if student is already enrolled in given course section
+    # Returns 0 if no, 1 if yes
     @classmethod
     def checkDuplicate(cls, student_id, course_link):
         q = "SELECT COUNT(*) FROM Enrolls_in WHERE student_ID=? AND course_link=?"
         response = conn.execute(q, (student_id, course_link))
         return response.fetchone()[0]
 
+    # Returns a list of every course section a given student is currently enrolled in
+    # Flag, student_id, course_link, student_name, section_id, capacity, course_id, instructor_id
+    # ROW[0][0] = First Row, First Col (flag)
     @classmethod
-    def getEnrolled(cls, student_id):
+    def getEnrolledCourses(cls, student_id):
         q = "SELECT * FROM Enrolls_in " \
             "JOIN Student USING(student_ID)" \
             "JOIN Section USING(course_link) " \
@@ -173,8 +180,9 @@ class Enrollment:
 
 
 x = Enrollment.checkDuplicate(1, 1)
-y=Enrollment.getEnrolled(3497)
-print(y)
+y=Enrollment.getEnrolledCourses(3497)
+print(Enrollment.checkCap(1))
+print(y[0])
 
 
 
@@ -244,7 +252,7 @@ class Section:
             return 3
             # Section doesn't exist
 
-
-print(Section.add(13, 3, "ART101", 30))
-print(Section.remove(13, "ART101", 10))
-print(Section.editSectionInfo(13, "ART101", 10))
+#
+# print(Section.add(13, 3, "ART101", 30))
+# print(Section.remove(13, "ART101", 10))
+# print(Section.editSectionInfo(13, "ART101", 10))

@@ -250,17 +250,18 @@ class RegisterStudent(QWidget):
         course_link = model.Enrollment.getCourseLink(sectionID, courseID)
         course_link = str(course_link)
         duplicateCheck = model.Enrollment.checkDuplicate(studentID, course_link)
-        if duplicateCheck>0:
+        if duplicateCheck > 0:
             self.label.setText("Student already enrolled")
         else:
-            sa = model.Enrollment.checkCap(course_link)[0]
-            if int(sa)<1:
+            course_link = course_link[1]
+            sa = model.Enrollment.checkCap(int(course_link))[0][0]
+            print(sa)
+            if sa != 0:
                 print("OVER CAPACITY FLAG")
                 flag = "EXCESS CRED"
-            else:
                 model.Enrollment.add(flag,studentID,course_link)
-
-
+            else:
+                model.Enrollment.add(flag, studentID, course_link)
 
 
 class RemoveFlag(QWidget):
@@ -293,13 +294,11 @@ class RemoveFlag(QWidget):
             self.w.close()
             self.w = None
 
-
     def addClick(self):
         instructorID = self.textbox2.text()
         instructorName = self.textbox.text()
         print("Name:" + instructorName + " ID:" + instructorID)
         model.add("i", instructorID, instructorName)
-
 
     def remClick(self):
         instructorID = self.textbox2.text()
@@ -307,7 +306,7 @@ class RemoveFlag(QWidget):
 
 
 class flagMenu(QWidget):
-    def __init__(self,studentID):
+    def __init__(self, studentID):
         super().__init__()
         self.studentID = studentID
         self.setWindowTitle('Student Flags')
@@ -318,7 +317,7 @@ class flagMenu(QWidget):
 
     def initUI(self):
         label = QLabel(self)
-        label.setText("STUDENT ID:"+self.studentID)
+        label.setText("STUDENT ID:" + self.studentID)
         label.move(20, 20)
         label.resize(150, 30)
         self.createTable()
@@ -326,7 +325,7 @@ class flagMenu(QWidget):
     def createTable(self):
         table = QTableWidget(self)
         table.setColumnCount(3)
-        table.setColumnWidth(0,170)
+        table.setColumnWidth(0, 170)
         table.move(10, 100)
         table.resize(400, 300)
         table.setHorizontalHeaderLabels(("Course Description;Section;Course Flags").split(";"))
@@ -585,7 +584,7 @@ class courses(QWidget):
         unenroll.resize(150, 40)
         unenroll.move(300, 450)
         exit = QPushButton("OK", self)
-        exit.resize(150,40)
+        exit.resize(150, 40)
         exit.clicked.connect(lambda: self.close())
         exit.move(150, 450)
 
