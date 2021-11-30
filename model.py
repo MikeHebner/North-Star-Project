@@ -232,7 +232,7 @@ print(y[0])
 
 
 class Course:
-    def __int__(self,desciption, course_id, credits):
+    def __init__(self,description, course_id, credits):
         self.description = description
         self.course_id = course_id
         self.credits = credits
@@ -278,9 +278,9 @@ class Course:
             response = conn.execute(q1, (description,))
             if len(response.fetchall())==0:
                 print("GOt HERe")
-                q2="UPDATE Course Set main.Course.description=(?) WHERE main.Course.course_ID=(?)"
-                print(q2)
-                coursor = conn.execute(q2, (description,course_id))
+                q2="UPDATE Course Set description=(?) WHERE course_ID=(?)"
+
+                conn.execute(q2, (description,course_id,))
                 conn.commit()
                 return 1
                 #Successful description Update
@@ -291,7 +291,7 @@ class Course:
             return 3
             #No Course
 Course.add("Test","COMP490",3)
-Course.editDescription("LOOK HERE","COMP490")
+Course.editDescription("LOOKHERE","COMP490")
 #print(Course.remove("COMP490"))
 class Section:
     def __init__(self, section_id, capacity, course_id, instuctor_id):
