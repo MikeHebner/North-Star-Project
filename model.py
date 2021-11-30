@@ -231,7 +231,68 @@ print(Enrollment.checkCap(1))
 print(y[0])
 
 
+class Course:
+    def __int__(self,desciption, course_id, credits):
+        self.description = description
+        self.course_id = course_id
+        self.credits = credits
 
+    @classmethod
+    def add(cls, desciption, course_id,credits):
+        q1 = "SELECT * FROM main.Course WHERE course_ID=(?)"
+        response = conn.execute(q1, (course_id,))
+        if len(response.fetchall())==0:
+            q2 = "SELECT * FROM main.Course WHERE description=(?)"
+            response2 = conn.execute(q2, (desciption,))
+            if len(response2.fetchall())==0:
+                q3 = "INSERT INTO main.Course(description, course_ID, credits) VALUES (?,?,?)"
+                conn.execute(q3, (desciption,course_id,credits))
+                conn.commit()
+                return 1
+                #course added sucessfully
+            else:
+                return 2
+                #Duplicate Description
+        else:
+            return 3
+            #COURSE ID Exists
+    @classmethod
+    def remove(cls,course_id):
+        q1 = "SELECT * FROM main.Course WHERE course_ID=(?)"
+        response = conn.execute(q1, (course_id,))
+        if len(response.fetchall())>0:
+            q2 = "DELETE FROM main.Course WHERE main.Course.course_ID=(?)"
+            conn.execute(q2, (course_id,))
+            conn.commit()
+            return 1
+            #Found and removed
+        else:
+            return 0
+            #Course doesn't exist
+    @classmethod
+    def editDescription(cls,description,course_id):
+        q = "SELECT * FROM main.Course WHERE course_ID=(?)"
+        response0 = conn.execute(q, (course_id,))
+        if len(response0.fetchall())>0:
+            q1 = "SELECT * FROM main.Course WHERE description=(?)"
+            response = conn.execute(q1, (description,))
+            if len(response.fetchall())==0:
+                print("GOt HERe")
+                q2="UPDATE Course Set main.Course.description=(?) WHERE main.Course.course_ID=(?)"
+                print(q2)
+                coursor = conn.execute(q2, (description,course_id))
+                conn.commit()
+                return 1
+                #Successful description Update
+            else:
+                return 2
+                #Duplicate description
+        else:
+            return 3
+            #No Course
+Course.add("Test","COMP490",3)
+Course.editDescription("LOOK HERE","COMP490")
+#print(Course.remove("COMP490"))
 class Section:
     def __init__(self, section_id, capacity, course_id, instuctor_id):
         self.section_id = section_id
