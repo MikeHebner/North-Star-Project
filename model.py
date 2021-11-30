@@ -76,8 +76,6 @@ class Student:
             # No ID of that in student
 
 
-
-
 class Instructor:
     def __init__(self, instructor_id, instructor_name):
         self.instructor_id = instructor_id
