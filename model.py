@@ -290,8 +290,8 @@ class Course:
         else:
             return 3
             #No Course
-Course.add("Test","COMP490",3)
-Course.editDescription("LOOKHERE","COMP490")
+Course.add("Test","CO1MP490",3)
+Course.editDescription("LOOKHE3RE","CO1MP490")
 #print(Course.remove("COMP490"))
 class Section:
     def __init__(self, section_id, capacity, course_id, instuctor_id):
