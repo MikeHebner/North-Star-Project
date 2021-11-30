@@ -259,7 +259,7 @@ class RegisterStudent(QWidget):
             if sa != 0:
                 print("OVER CAPACITY FLAG")
                 flag = "EXCESS CRED"
-                model.Enrollment.add(flag,studentID,course_link)
+                model.Enrollment.add(flag, studentID, course_link)
             else:
                 model.Enrollment.add(flag, studentID, course_link)
 
@@ -375,51 +375,53 @@ class PrintStudentDetails(QWidget):
 
 
 class studentDetails(QWidget):
-    def __init__(self,student_id):
+    def __init__(self, student_id):
         super().__init__()
         self.student_id = student_id
         self.setWindowTitle('Student Details')
-        self.resize(700, 700)
+        self.resize(600, 400)
         layout = QVBoxLayout()
         self.setLayout(layout)
         self.initUI()
 
-
     def initUI(self):
         self.createTable()
         semID = QLabel(self)
-        semID.setText("Semester ID & Description")
+        semID.setText("Fall 2021")
         semID.move(150, 20)
         semID.resize(150, 40)
         semID.adjustSize()
         studentDetails = QLabel(self)
-        studentDetails.setText("Student ID & Name")
+        studentName = model.Student.getName(self.student_id)[0]
+        studentDetails.setText(str(studentName) + "  ID:" + self.student_id)
         studentDetails.move(150, 40)
         studentDetails.resize(150, 40)
         studentDetails.adjustSize()
 
     def createTable(self):
         data = model.Enrollment.getEnrollmentDetails(self.student_id)
+        totalCredits = model.Enrollment.getEnrolledCreds(self.student_id)
         rowCount = model.Enrollment.enrolledCount(self.student_id)
         table = QTableWidget(self)
         table.setColumnCount(5)
-        table.setRowCount(rowCount)
+        table.setRowCount(rowCount + 2)
         table.move(0, 100)
-        table.setMinimumSize(700,500)
+        table.setMinimumSize(700, 500)
 
         table.setHorizontalHeaderLabels(("Course Description;Course ID;Instructor;Credits;Course Flags").split(";"))
         for i in range(rowCount):
             for j in range(5):
                 table.setItem(i, j, QTableWidgetItem(str(data[i][j])))
+        for i in range(5):
+            table.setItem(rowCount, i, QTableWidgetItem(""))
+            table.item(rowCount, i).setBackground(QtGui.QColor(0, 0, 0))
+        table.setItem(rowCount + 1, 0, QTableWidgetItem("Total Credits"))
+        table.setItem(rowCount + 1, 1, QTableWidgetItem(str(totalCredits)))
         table.resizeColumnsToContents()
         table.resizeRowsToContents()
-        credits = QLineEdit(self)
-        credits.setPlaceholderText("Credits for semester")
-        credits.resize(150, 40)
-        credits.move(300, 400)
         exit = QPushButton("OK", self)
         exit.clicked.connect(lambda: self.close())
-        exit.move(300, 450)
+        exit.move(300, 250)
 
 
 class editSection(QWidget):

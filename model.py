@@ -18,6 +18,7 @@ class Student:
         self.student_id = student_id
         self.student_name = student_name
 
+
     def __str__(self):
         # Formating a string with students
         return "ID:%s, NAME:%s" % (self.student_id, self.student_name)
@@ -31,6 +32,13 @@ class Student:
             student = Student(row[0], row[1])
             result.append(student)
         return result
+
+    @classmethod
+    def getName(cls, student_id):
+        q = "SELECT student_name FROM main.Student WHERE student_ID=?"
+        cursor = conn.execute(q,(student_id,))
+        name = cursor.fetchone()
+        return name
 
     @classmethod
     def add(self, studentID, studentName):
@@ -67,8 +75,7 @@ class Student:
             return 0
             # No ID of that in student
 
-    def getEnrolledCreds(self, studentID):
-        q = "SELECT "
+
 
 
 class Instructor:
@@ -205,6 +212,18 @@ class Enrollment:
         count = cursor.fetchone()
         return count[0]
 
+    @classmethod
+    def getEnrolledCreds(self, studentID):
+        total = 0
+        q = "SELECT credits FROM main.Enrolls_in " \
+            "JOIN main.Section USING(course_link) " \
+            "JOIN main.Course USING(course_ID) " \
+            "WHERE student_ID=?"
+        response = conn.execute(q,(studentID,))
+        credits = response.fetchall()
+        for i in range(len(credits)):
+            total = total + int(credits[i][0])
+        return total
 
 x = Enrollment.checkDuplicate(1, 1)
 y=Enrollment.getEnrolledCourses(3497)
