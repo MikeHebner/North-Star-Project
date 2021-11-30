@@ -298,7 +298,7 @@ class RemoveFlag(QWidget):
         instructorID = self.textbox2.text()
         instructorName = self.textbox.text()
         print("Name:" + instructorName + " ID:" + instructorID)
-        model.add("i", instructorID, instructorName)
+        model.Instructor.add(instructorID, instructorName)
 
     def remClick(self):
         instructorID = self.textbox2.text()
@@ -347,6 +347,7 @@ class PrintStudentDetails(QWidget):
     def __init__(self):
         super().__init__()
         self.w = None
+        self.textbox = QLineEdit(self)
         self.setWindowTitle('Student Details')
         self.resize(200, 200)
         layout = QVBoxLayout()
@@ -354,10 +355,9 @@ class PrintStudentDetails(QWidget):
         self.initUi()
 
     def initUi(self):
-        textbox = QLineEdit(self)
-        textbox.setPlaceholderText("Enter Student ID")
-        textbox.move(20, 20)
-        textbox.resize(150, 30)
+        self.textbox.setPlaceholderText("Enter Student ID")
+        self.textbox.move(20, 20)
+        self.textbox.resize(150, 30)
         button = QPushButton("Search", self)
         button.move(20, 100)
         button.clicked.connect(self.showStudentInfo)
@@ -367,7 +367,7 @@ class PrintStudentDetails(QWidget):
 
     def showStudentInfo(self):
         if self.w is None:
-            self.w = studentDetails()
+            self.w = studentDetails(self.textbox.text())
             self.w.show()
         else:
             self.w.close()
@@ -375,16 +375,18 @@ class PrintStudentDetails(QWidget):
 
 
 class studentDetails(QWidget):
-    def __init__(self):
+    def __init__(self,student_id):
         super().__init__()
+        self.student_id = student_id
         self.setWindowTitle('Student Details')
         self.resize(500, 500)
         layout = QVBoxLayout()
         self.setLayout(layout)
         self.initUI()
-        self.createTable()
+
 
     def initUI(self):
+        self.createTable()
         semID = QLabel(self)
         semID.setText("Semester ID & Description")
         semID.move(150, 20)
@@ -397,8 +399,10 @@ class studentDetails(QWidget):
         studentDetails.adjustSize()
 
     def createTable(self):
+        data = model.Enrollment.getEnrolledCourses(self.student_id)
         table = QTableWidget(self)
         table.setColumnCount(5)
+        table.setRowCount(model.Enrollment.enrolledCount(self.student_id))
         table.move(0, 100)
         table.resize(500, 300)
         table.setHorizontalHeaderLabels(("Course Description;Course ID;Instructor;Credits;Course Flags").split(";"))

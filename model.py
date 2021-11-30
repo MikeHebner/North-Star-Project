@@ -80,6 +80,13 @@ class Instructor:
         return "ID:%s, NAME:%s" % (self.instructor_id, self.instructor_name)
 
     @classmethod
+    def getName(cls, instructor_id):
+        q = "SELECT instructor_name FROM main.Instructor WHERE instructor_ID=?"
+        cursor = conn.execute(q,(instructor_id,))
+        name = cursor.fetchone()
+        return name
+
+    @classmethod
     def getAll(self):
         result = []
         q = "SELECT * FROM Instructor"
@@ -130,6 +137,7 @@ class Instructor:
 # for i in range(xSize):
 #     print(x[i])
 
+print(Instructor.getName(45)[0])
 
 class Enrollment:
     def __init__(self, student_id, section_id):
@@ -177,6 +185,14 @@ class Enrollment:
             "WHERE Enrolls_in.student_ID=?"
         enrollmentInfo = conn.execute(q, (student_id,))
         return enrollmentInfo.fetchall()
+
+    @classmethod
+    def enrolledCount(cls,student_id):
+        q = "SELECT COUNT(*) FROM main.Enrolls_in " \
+            "WHERE Enrolls_in.student_ID=?"
+        cursor = conn.execute(q,(student_id,))
+        count = cursor.fetchone()
+        return count[0]
 
 
 x = Enrollment.checkDuplicate(1, 1)
