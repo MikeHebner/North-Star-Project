@@ -1,7 +1,6 @@
 import sys
 from PyQt5 import QtWidgets, QtCore, QtGui
-from PyQt5.QtWidgets import QApplication, QMainWindow, QComboBox, QWidget, QPushButton, QLabel, QVBoxLayout, QLineEdit, \
-    QGridLayout, QTableWidget, QTableWidgetItem
+from PyQt5.QtWidgets import QApplication, QMainWindow, QComboBox, QWidget, QPushButton, QLabel, QVBoxLayout, QLineEdit, QGridLayout, QTableWidget, QTableWidgetItem
 from PyQt5.QtCore import pyqtSlot, QSize, Qt
 import PyQt5.QtWidgets as qtw
 import sqlite3 as sql
@@ -303,7 +302,7 @@ class RemoveFlag(QWidget):
     def remClick(self):
         instructorID = self.textbox2.text()
         model.Instructor.remove(instructorID)
-
+    #link needed
 
 class flagMenu(QWidget):
     def __init__(self, studentID):
@@ -341,7 +340,6 @@ class flagMenu(QWidget):
 
     def popRows(self):
         return
-
 
 class PrintStudentDetails(QWidget):
     def __init__(self):
@@ -536,15 +534,15 @@ class unenrollStudent(QWidget):
         self.w = None
         self.setWindowTitle('Unenroll Student')
         self.resize(200, 200)
+        self.textbox = QLineEdit(self)
         layout = QVBoxLayout()
         self.setLayout(layout)
         self.initUi()
 
     def initUi(self):
-        textbox = QLineEdit(self)
-        textbox.setPlaceholderText("Enter Student ID")
-        textbox.move(20, 20)
-        textbox.resize(150, 30)
+        self.textbox.setPlaceholderText("Enter Student ID")
+        self.textbox.move(20, 20)
+        self.textbox.resize(150, 30)
         button = QPushButton("Search", self)
         button.move(20, 100)
         button.clicked.connect(self.showCourses)
@@ -554,7 +552,7 @@ class unenrollStudent(QWidget):
 
     def showCourses(self):
         if self.w is None:
-            self.w = courses()
+            self.w = courses(self.textbox.text())
             self.w.show()
         else:
             self.w.close()
@@ -562,44 +560,55 @@ class unenrollStudent(QWidget):
 
 
 class courses(QWidget):
-    def __init__(self):
+    def __init__(self, student_id):
         super().__init__()
+        self.student_id = student_id
         self.setWindowTitle('Student Unenrollment')
         self.resize(500, 500)
         layout = QVBoxLayout()
         self.setLayout(layout)
+
         self.initUI()
         self.createTable()
 
     def initUI(self):
+        self.createTable()
         semID = QLabel(self)
-        semID.setText("Student ID")
+        semID.setText("Fall 2021")
         semID.move(150, 20)
         semID.resize(150, 40)
         semID.adjustSize()
         studentDetails = QLabel(self)
-        studentDetails.setText("Student Name")
+        studentName = model.Student.getName(self.student_id)[0]
+        studentDetails.setText(str(studentName) + "  ID:" + self.student_id)
         studentDetails.move(150, 40)
         studentDetails.resize(150, 40)
         studentDetails.adjustSize()
 
     def createTable(self):
+        data = model.Enrollment.getEnrollmentDetails(self.student_id)
+        totalCredits = model.Enrollment.getEnrolledCreds(self.student_id)
+        rowCount = model.Enrollment.enrolledCount(self.student_id)
         table = QTableWidget(self)
-        table.setColumnCount(3)
+        table.setColumnCount(5)
+        table.setRowCount(rowCount + 2)
         table.move(0, 100)
-        table.resize(300, 300)
-        table.setHorizontalHeaderLabels(("Course;Course Section;Remove").split(";"))
-        credits = QLineEdit(self)
-        credits.setPlaceholderText("Enter course to be removed")
-        credits.resize(150, 40)
-        credits.move(300, 400)
-        unenroll = QPushButton("Unenroll", self)
-        unenroll.resize(150, 40)
-        unenroll.move(300, 450)
+        table.setMinimumSize(700, 500)
+
+        table.setHorizontalHeaderLabels(("Course Description;Course ID;Instructor;Credits;Course Flags").split(";"))
+        for i in range(rowCount):
+            for j in range(5):
+                table.setItem(i, j, QTableWidgetItem(str(data[i][j])))
+        for i in range(5):
+            table.setItem(rowCount, i, QTableWidgetItem(""))
+            table.item(rowCount, i).setBackground(QtGui.QColor(0, 0, 0))
+        table.setItem(rowCount + 1, 0, QTableWidgetItem("Total Credits"))
+        table.setItem(rowCount + 1, 1, QTableWidgetItem(str(totalCredits)))
+        table.resizeColumnsToContents()
+        table.resizeRowsToContents()
         exit = QPushButton("OK", self)
-        exit.resize(150, 40)
         exit.clicked.connect(lambda: self.close())
-        exit.move(150, 450)
+        exit.move(300, 250)
 
 
 class MainWindow(QMainWindow):
