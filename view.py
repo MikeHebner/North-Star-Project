@@ -482,22 +482,26 @@ class editCourse(QWidget):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Course")
-        self.resize(200, 200)
+        self.resize(200, 300)
         layout = QVBoxLayout()
         self.setLayout(layout)
         self.initUI()
 
     def initUI(self):
         textbox = QLineEdit(self)
-        textbox.setPlaceholderText("Enter Course ID")
+        textbox.setPlaceholderText("Enter Course Description")
         textbox.move(20, 20)
         textbox.resize(150, 30)
         textbox2 = QLineEdit(self)
-        textbox2.setPlaceholderText("Enter New Section ID")
+        textbox2.setPlaceholderText("Enter Course ID")
         textbox2.move(20, 60)
         textbox2.resize(150, 30)
-        button = QPushButton("Add Section to Course", self)
-        button.move(20, 100)
+        textbox3 = QLineEdit(self)
+        textbox3.setPlaceholderText("Enter Course Credits")
+        textbox3.move(20, 100)
+        textbox3.resize(150, 30)
+        button = QPushButton("Add Course", self)
+        button.move(20, 140)
         button.resize(150, 30)
 
 
