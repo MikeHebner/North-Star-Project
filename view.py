@@ -143,6 +143,7 @@ class AddInstructor(QWidget):
     def __init__(self):
         super().__init__()
         self.w = None
+        self.prompt = QLabel(self)
         self.textbox2 = QLineEdit(self)
         self.textbox = QLineEdit(self)
         self.setWindowTitle('Instructor Database')
@@ -158,6 +159,11 @@ class AddInstructor(QWidget):
         self.textbox2.setPlaceholderText("Enter Instructor ID")
         self.textbox2.move(20, 60)
         self.textbox2.resize(150, 30)
+        self.prompt.setText("ADD - name & ID\n"
+                            "REMOVE - ID\n"
+                            "EDIT - new name & ID\n")
+        self.prompt.move(20, 95)
+        self.prompt.resize(150, 45)
         button = QPushButton("Add Instructor", self)
         button.resize(150, 40)
         button.move(20, 100)
@@ -170,6 +176,11 @@ class AddInstructor(QWidget):
         button3.clicked.connect(self.showInstructorInfo)
         button3.resize(150, 40)
         button3.move(20, 180)
+
+    def editClick(self):
+        instructorID = self.textbox2.text()
+        newName = self.textbox.text()
+        model.Instructor.editInstructorInfo(newName, instructorID)
 
     def showInstructorInfo(self):
         if self.w is None:
