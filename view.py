@@ -650,6 +650,7 @@ class MainWindow(QMainWindow):
         pybutton7.resize(150, 40)
         pybutton7.move(160, 110)
 
+
         pybutton8 = QPushButton("Exit", self)
         pybutton8.clicked.connect(lambda: self.close())
         pybutton8.resize(150, 40)

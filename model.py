@@ -5,12 +5,6 @@ import sqlite3 as sql
 conn = sql.connect('db.sqlite')
 
 
-# test method, needs to be implemented for general use
-def printAllStudentsEnrolledSemester():
-    cursor = conn.execute("SELECT * FROM Enrolls_in JOIN Student S on S.student_ID = Enrolls_in.student_ID")
-    for row in cursor:
-        print(row)
-
 
 class Student:
 
@@ -138,13 +132,8 @@ class Instructor:
             return 0
 
 
-# Instructor.editInstructorInfo("Kelly Manso", 60)
-# x = Instructor.getAll()
-# xSize = len(x)
-# for i in range(xSize):
-#     print(x[i])
 
-print(Instructor.getName(45)[0])
+
 
 class Enrollment:
     def __init__(self, student_id, section_id):
@@ -225,10 +214,32 @@ class Enrollment:
             total = total + int(credits[i][0])
         return total
 
-x = Enrollment.checkDuplicate(1, 1)
-y=Enrollment.getEnrolledCourses(3497)
-print(Enrollment.checkCap(1))
-print(y[0])
+
+    # Gets data required for removing flag and
+    # unenrolling student in course section.
+    @classmethod
+    def getIt(cls,studentID):
+        q = "SELECT course_id, section_ID, flag, course_link " \
+            "FROM Enrolls_in " \
+            "JOIN Section USING(course_link) " \
+            "WHERE student_ID=?"
+        response = conn.execute(q,(studentID,))
+        it = response.fetchall()
+        return it
+
+
+    @classmethod
+    def unENroll(cls,studentID,course_link):
+        q = "SELECT * FROM Enrolls_in WHERE student_ID = (?) AND course_link = (?)"
+        response = conn.execute(q, (studentID,course_link))
+        if len(response.fetchall()) > 0:
+            q = "DELETE FROM Enrolls_in WHERE student_ID = (?) AND course_link = (?)"
+            conn.execute(q, (studentID, course_link))
+            conn.commit()
+            return 1
+        else:
+            return 0
+
 
 
 
@@ -297,8 +308,3 @@ class Section:
         else:
             return 3
             # Section doesn't exist
-
-#
-# print(Section.add(13, 3, "ART101", 30))
-# print(Section.remove(13, "ART101", 10))
-# print(Section.editSectionInfo(13, "ART101", 10))
