@@ -55,13 +55,16 @@ class Student:
             return 0
 
     @classmethod
-    def editStudentInfo(self, studentName, studentID):
-        rq = "SELECT * FROM Student WHERE student_ID = (?)"
+    def editStudentInfo(cls, studentName, studentID):
+        rq = "SELECT count(*) FROM Student WHERE student_ID = (?)"
 
         response = conn.execute(rq, (studentID,))
-        if (len(response.fetchall()) > 0):
-            q = "UPDATE Student Set student_name=(?) WHERE student_ID==(?)"
+
+        if response.fetchone()[0]==1:
+            q = "UPDATE Student Set student_name= ? WHERE student_ID==?"
             conn.execute(q, (studentName, studentID))
+            conn.commit()
+            print(q)
             return 1
         else:
             return 0

@@ -13,6 +13,7 @@ class AddStudent(QWidget):
         super().__init__()
         self.textbox2 = QLineEdit(self)
         self.textbox = QLineEdit(self)
+        self.prompt = QLabel(self)
         self.w = None
         self.setWindowTitle('Student Database')
         self.resize(200, 300)
@@ -28,18 +29,23 @@ class AddStudent(QWidget):
         self.textbox2.setPlaceholderText("Enter Student ID")
         self.textbox2.move(20, 60)
         self.textbox2.resize(150, 30)
+        self.prompt.setText("ADD - name & ID\n"
+                            "REMOVE - ID\n"
+                            "EDIT - new name & ID\n")
+        self.prompt.move(20,95)
+        self.prompt.resize(150,45)
         button = QPushButton("Add Student", self)
         button.resize(150, 40)
-        button.move(20, 100)
+        button.move(20, 140)
         button.clicked.connect(self.addClick)
         button2 = QPushButton("Remove Student", self)
         button2.resize(150, 40)
-        button2.move(20, 140)
+        button2.move(20, 180)
         button2.clicked.connect(self.remClick)
         button3 = QPushButton("Edit Student Info", self)
-        button3.clicked.connect(self.showStudentSearch)
+        button3.clicked.connect(self.editClick)
         button3.resize(150, 40)
-        button3.move(20, 180)
+        button3.move(20, 220)
 
     def showStudentSearch(self):
         if self.w is None:
@@ -58,6 +64,11 @@ class AddStudent(QWidget):
     def remClick(self):
         studentID = self.textbox2.text()
         model.Student.remove(studentID)
+
+    def editClick(self):
+        studentID = self.textbox2.text()
+        newName = self.textbox.text()
+        model.Student.editStudentInfo(newName, studentID)
 
 
 class studentSearch(QWidget):
