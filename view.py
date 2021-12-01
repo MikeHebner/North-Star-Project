@@ -1,6 +1,7 @@
 import sys
 from PyQt5 import QtWidgets, QtCore, QtGui
-from PyQt5.QtWidgets import QApplication, QMainWindow, QComboBox, QWidget, QPushButton, QLabel, QVBoxLayout, QLineEdit, QGridLayout, QTableWidget, QTableWidgetItem
+from PyQt5.QtWidgets import QApplication, QMainWindow, QComboBox, QWidget, QPushButton, QLabel, QVBoxLayout, QLineEdit, \
+    QGridLayout, QTableWidget, QTableWidgetItem
 from PyQt5.QtCore import pyqtSlot, QSize, Qt
 import PyQt5.QtWidgets as qtw
 import sqlite3 as sql
@@ -245,7 +246,7 @@ class RegisterStudent(QWidget):
         courseID = courseID.upper()
         sectionID = self.textbox3.text()
         studentID = self.textbox2.text()
-        flag = None
+        flag = 'None'
         course_link = model.Enrollment.getCourseLink(sectionID, courseID)
         course_link = str(course_link)
         duplicateCheck = model.Enrollment.checkDuplicate(studentID, course_link)
@@ -255,9 +256,13 @@ class RegisterStudent(QWidget):
             course_link = course_link[1]
             sa = model.Enrollment.checkCap(int(course_link))[0][0]
             print(sa)
-            if sa != 0:
+            if sa == 0:
                 print("OVER CAPACITY FLAG")
-                flag = "EXCESS CRED"
+                flag = "Over Capacity"
+                model.Enrollment.add(flag, studentID, course_link)
+            elif model.Enrollment.getEnrolledCreds(studentID) > 12:
+                print("EXCESS CRED")
+                flag = "Excess Cred"
                 model.Enrollment.add(flag, studentID, course_link)
             else:
                 model.Enrollment.add(flag, studentID, course_link)
@@ -302,7 +307,8 @@ class RemoveFlag(QWidget):
     def remClick(self):
         instructorID = self.textbox2.text()
         model.Instructor.remove(instructorID)
-    #link needed
+    # link needed
+
 
 class flagMenu(QWidget):
     def __init__(self, studentID):
@@ -340,6 +346,7 @@ class flagMenu(QWidget):
 
     def popRows(self):
         return
+
 
 class PrintStudentDetails(QWidget):
     def __init__(self):
@@ -658,7 +665,6 @@ class MainWindow(QMainWindow):
         pybutton7.clicked.connect(self.showPrintStudentDetail)
         pybutton7.resize(150, 40)
         pybutton7.move(160, 110)
-
 
         pybutton8 = QPushButton("Exit", self)
         pybutton8.clicked.connect(lambda: self.close())

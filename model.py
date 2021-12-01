@@ -5,13 +5,11 @@ import sqlite3 as sql
 conn = sql.connect('db.sqlite')
 
 
-
 class Student:
 
     def __init__(self, student_id, student_name):
         self.student_id = student_id
         self.student_name = student_name
-
 
     def __str__(self):
         # Formating a string with students
@@ -30,7 +28,7 @@ class Student:
     @classmethod
     def getName(cls, student_id):
         q = "SELECT student_name FROM main.Student WHERE student_ID=?"
-        cursor = conn.execute(q,(student_id,))
+        cursor = conn.execute(q, (student_id,))
         name = cursor.fetchone()
         return name
 
@@ -81,7 +79,7 @@ class Instructor:
     @classmethod
     def getName(cls, instructor_id):
         q = "SELECT instructor_name FROM main.Instructor WHERE instructor_ID=?"
-        cursor = conn.execute(q,(instructor_id,))
+        cursor = conn.execute(q, (instructor_id,))
         name = cursor.fetchone()
         return name
 
@@ -130,9 +128,6 @@ class Instructor:
             return 0
 
 
-
-
-
 class Enrollment:
     def __init__(self, student_id, section_id):
         self.student_id = student_id
@@ -149,9 +144,16 @@ class Enrollment:
 
     @classmethod
     def add(cls, flag, student_id, course_link):
-        q = "INSERT INTO Enrolls_in(flag, student_ID, course_link) VALUES (?,?,?)"
-        conn.execute(q, (flag, student_id, course_link))
-        conn.commit()
+        q = "SELECT count(*) FROM Enrolls_in " \
+            "WHERE student_ID=? AND course_link=?"
+        response = conn.execute(q,(student_id,course_link))
+        check = response.fetchone()[0]
+        if check > 0:
+            return "ALREADY ENROLLED"
+        else:
+            q = "INSERT INTO Enrolls_in(flag, student_ID, course_link) VALUES (?,?,?)"
+            conn.execute(q, (flag, student_id, course_link))
+            conn.commit()
 
     # Returns (int) capacity of course section
     @classmethod
@@ -180,56 +182,59 @@ class Enrollment:
         enrollmentInfo = conn.execute(q, (student_id,))
         return enrollmentInfo.fetchall()
 
+    # Returns enrollment details for a given student
     @classmethod
-    def getEnrollmentDetails(cls,student_id):
+    def getEnrollmentDetails(cls, student_id):
         q = "SELECT description, course_ID, instructor_name, credits, flag FROM Enrolls_in " \
             "JOIN Section USING(course_link) " \
             "JOIN Course USING(course_ID) " \
             "JOIN main.Instructor " \
             "USING(instructor_ID)" \
             "WHERE student_ID=?"
-        enrollmentDetails = conn.execute(q,(student_id,))
+        enrollmentDetails = conn.execute(q, (student_id,))
         return enrollmentDetails.fetchall()
 
+    # Returns the number of courses a student is currently enrolled in
     @classmethod
-    def enrolledCount(cls,student_id):
+    def enrolledCount(cls, student_id):
         q = "SELECT COUNT(*) FROM main.Enrolls_in " \
             "WHERE Enrolls_in.student_ID=?"
-        cursor = conn.execute(q,(student_id,))
+        cursor = conn.execute(q, (student_id,))
         count = cursor.fetchone()
         return count[0]
 
+    # Returns the total credits a student is currently enrolled in
     @classmethod
-    def getEnrolledCreds(self, studentID):
+    def getEnrolledCreds(cls, studentID):
         total = 0
         q = "SELECT credits FROM main.Enrolls_in " \
             "JOIN main.Section USING(course_link) " \
             "JOIN main.Course USING(course_ID) " \
             "WHERE student_ID=?"
-        response = conn.execute(q,(studentID,))
+        response = conn.execute(q, (studentID,))
         credits = response.fetchall()
         for i in range(len(credits)):
             total = total + int(credits[i][0])
         return total
 
-
     # Gets data required for removing flag and
     # unenrolling student in course section.
     @classmethod
-    def getIt(cls,studentID):
+    def getIt(cls, studentID):
         q = "SELECT course_id, section_ID, flag, course_link " \
             "FROM Enrolls_in " \
             "JOIN Section USING(course_link) " \
             "WHERE student_ID=?"
-        response = conn.execute(q,(studentID,))
+        response = conn.execute(q, (studentID,))
         it = response.fetchall()
         return it
 
-
+    # Unenrolls a student in a given course section
+    # Checks first to make sure they're enrolled before deleting
     @classmethod
-    def unENroll(cls,studentID,course_link):
+    def unENroll(cls, studentID, course_link):
         q = "SELECT * FROM Enrolls_in WHERE student_ID = (?) AND course_link = (?)"
-        response = conn.execute(q, (studentID,course_link))
+        response = conn.execute(q, (studentID, course_link))
         if len(response.fetchall()) > 0:
             q = "DELETE FROM Enrolls_in WHERE student_ID = (?) AND course_link = (?)"
             conn.execute(q, (studentID, course_link))
@@ -241,67 +246,73 @@ class Enrollment:
 
 
 class Course:
-    def __init__(self,description, course_id, credits):
+    def __init__(self, description, course_id, credits):
         self.description = description
         self.course_id = course_id
         self.credits = credits
 
     @classmethod
-    def add(cls, desciption, course_id,credits):
+    def add(cls, desciption, course_id, credits):
         q1 = "SELECT * FROM main.Course WHERE course_ID=(?)"
         response = conn.execute(q1, (course_id,))
-        if len(response.fetchall())==0:
+        if len(response.fetchall()) == 0:
             q2 = "SELECT * FROM main.Course WHERE description=(?)"
             response2 = conn.execute(q2, (desciption,))
-            if len(response2.fetchall())==0:
+            if len(response2.fetchall()) == 0:
                 q3 = "INSERT INTO main.Course(description, course_ID, credits) VALUES (?,?,?)"
-                conn.execute(q3, (desciption,course_id,credits))
+                conn.execute(q3, (desciption, course_id, credits))
                 conn.commit()
                 return 1
-                #course added sucessfully
+                # course added sucessfully
             else:
                 return 2
-                #Duplicate Description
+                # Duplicate Description
         else:
             return 3
-            #COURSE ID Exists
+            # COURSE ID Exists
+
     @classmethod
-    def remove(cls,course_id):
+    def remove(cls, course_id):
         q1 = "SELECT * FROM main.Course WHERE course_ID=(?)"
         response = conn.execute(q1, (course_id,))
-        if len(response.fetchall())>0:
+        if len(response.fetchall()) > 0:
             q2 = "DELETE FROM main.Course WHERE main.Course.course_ID=(?)"
             conn.execute(q2, (course_id,))
             conn.commit()
             return 1
-            #Found and removed
+            # Found and removed
         else:
             return 0
-            #Course doesn't exist
+            # Course doesn't exist
+
     @classmethod
-    def editDescription(cls,description,course_id):
+    def editDescription(cls, description, course_id):
         q = "SELECT * FROM main.Course WHERE course_ID=(?)"
         response0 = conn.execute(q, (course_id,))
-        if len(response0.fetchall())>0:
+        if len(response0.fetchall()) > 0:
             q1 = "SELECT * FROM main.Course WHERE description=(?)"
             response = conn.execute(q1, (description,))
-            if len(response.fetchall())==0:
+            if len(response.fetchall()) == 0:
                 print("GOt HERe")
-                q2="UPDATE Course Set description=(?) WHERE course_ID=(?)"
+                q2 = "UPDATE Course Set description=(?) WHERE course_ID=(?)"
 
-                conn.execute(q2, (description,course_id,))
+                conn.execute(q2, (description, course_id,))
                 conn.commit()
                 return 1
-                #Successful description Update
+                # Successful description Update
             else:
                 return 2
-                #Duplicate description
+                # Duplicate description
         else:
             return 3
-            #No Course
-Course.add("Test","CO1MP490",3)
-Course.editDescription("LOOKHE3RE","CO1MP490")
-#print(Course.remove("COMP490"))
+            # No Course
+
+
+Course.add("Test", "CO1MP490", 3)
+Course.editDescription("LOOKHE3RE", "CO1MP490")
+
+
+# print(Course.remove("COMP490"))
 class Section:
     def __init__(self, section_id, capacity, course_id, instuctor_id):
         self.section_id = section_id
