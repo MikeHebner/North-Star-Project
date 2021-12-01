@@ -166,16 +166,16 @@ class AddInstructor(QWidget):
         self.prompt.resize(150, 45)
         button = QPushButton("Add Instructor", self)
         button.resize(150, 40)
-        button.move(20, 100)
+        button.move(20, 130)
         button.clicked.connect(self.addClick)
         button2 = QPushButton("Remove Instructor", self)
         button2.resize(150, 40)
-        button2.move(20, 140)
+        button2.move(20, 170)
         button2.clicked.connect(self.remClick)
         button3 = QPushButton("Edit Instructor Info", self)
         button3.clicked.connect(self.showInstructorInfo)
         button3.resize(150, 40)
-        button3.move(20, 180)
+        button3.move(20, 210)
 
     def editClick(self):
         instructorID = self.textbox2.text()
@@ -677,7 +677,7 @@ class MainWindow(QMainWindow):
         pybutton4.resize(120, 40)
         pybutton4.move(20, 150)
 
-        pybutton5 = QPushButton("Add Student Course", self)
+        pybutton5 = QPushButton("Add Student Course Selection", self)
         pybutton5.clicked.connect(self.showRegisterStudent)
         pybutton5.resize(150, 40)
         pybutton5.move(160, 30)
