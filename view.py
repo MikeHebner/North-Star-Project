@@ -186,6 +186,16 @@ class RemoveFlag(QWidget):
         self.setLayout(layout)
         self.initUi()
 
+    def initUi(self):
+        self.textbox.setPlaceholderText("Enter Student ID")
+        self.textbox.move(20, 20)
+        self.textbox.resize(150, 30)
+        button = QPushButton("Search", self)
+        button.move(20, 100)
+        button.clicked.connect(self.showFlags)
+        button2 = QPushButton("Exit", self)
+        button2.move(20, 140)
+        button2.clicked.connect(lambda: self.close())
     #def initUi(self):
         #self.textbox.setPlaceholderText("Enter Student ID")
         #self.textbox.move(20, 20)
@@ -196,6 +206,15 @@ class RemoveFlag(QWidget):
         #button2 = QPushButton("Exit", self)
         #button2.move(20, 140)
         #button2.clicked.connect(lambda: self.close())
+
+    def showFlags(self):
+        if self.w is None:
+            self.w = flagMenu(self.textbox.text())
+            self.w.show()
+        else:
+            self.w.close()
+            self.w = None
+
 class rFlag(QWidget):
     def __init__(self, student_id):
         super().__init__()
@@ -246,13 +265,7 @@ class rFlag(QWidget):
         exit.clicked.connect(lambda: self.close())
         exit.move(300, 250)
 
-    def showFlags(self):
-        if self.w is None:
-            self.w = flagMenu(self.textbox.text())
-            self.w.show()
-        else:
-            self.w.close()
-            self.w = None
+
 
 
 class flagMenu(QWidget):
