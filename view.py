@@ -196,7 +196,7 @@ class RemoveFlag(QWidget):
         #button2 = QPushButton("Exit", self)
         #button2.move(20, 140)
         #button2.clicked.connect(lambda: self.close())
-class RemoveFlag(QWidget):
+class rFlag(QWidget):
     def __init__(self, student_id):
         super().__init__()
         self.student_id = student_id
