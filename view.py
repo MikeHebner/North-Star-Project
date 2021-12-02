@@ -186,16 +186,65 @@ class RemoveFlag(QWidget):
         self.setLayout(layout)
         self.initUi()
 
-    def initUi(self):
-        self.textbox.setPlaceholderText("Enter Student ID")
-        self.textbox.move(20, 20)
-        self.textbox.resize(150, 30)
-        button = QPushButton("Search", self)
-        button.move(20, 100)
-        button.clicked.connect(self.showFlags)
-        button2 = QPushButton("Exit", self)
-        button2.move(20, 140)
-        button2.clicked.connect(lambda: self.close())
+    #def initUi(self):
+        #self.textbox.setPlaceholderText("Enter Student ID")
+        #self.textbox.move(20, 20)
+        #self.textbox.resize(150, 30)
+        #button = QPushButton("Search", self)
+        #button.move(20, 100)
+        #button.clicked.connect(self.showFlags)
+        #button2 = QPushButton("Exit", self)
+        #button2.move(20, 140)
+        #button2.clicked.connect(lambda: self.close())
+class RemoveFlag(QWidget):
+    def __init__(self, student_id):
+        super().__init__()
+        self.student_id = student_id
+        self.setWindowTitle('Student Unenrollment')
+        self.resize(500, 500)
+        layout = QVBoxLayout()
+        self.setLayout(layout)
+
+        self.initUI()
+        self.createTable()
+    def initUI(self):
+        self.createTable()
+        semID = QLabel(self)
+        semID.setText("Fall 2021")
+        semID.move(150, 20)
+        semID.resize(150, 40)
+        semID.adjustSize()
+        studentDetails = QLabel(self)
+        studentName = model.Student.getName(self.student_id)[0]
+        studentDetails.setText(str(studentName) + "  ID:" + self.student_id)
+        studentDetails.move(150, 40)
+        studentDetails.resize(150, 40)
+        studentDetails.adjustSize()
+
+    def createTable(self):
+        data = model.Enrollment.getEnrollmentDetails(self.student_id)
+        totalCredits = model.Enrollment.getEnrolledCreds(self.student_id)
+        rowCount = model.Enrollment.enrolledCount(self.student_id)
+        table = QTableWidget(self)
+        table.setColumnCount(5)
+        table.setRowCount(rowCount + 2)
+        table.move(0, 100)
+        table.setMinimumSize(700, 500)
+
+        table.setHorizontalHeaderLabels(("Course Description;Course ID;Instructor;Credits;Course Flags").split(";"))
+        for i in range(rowCount):
+            for j in range(5):
+                table.setItem(i, j, QTableWidgetItem(str(data[i][j])))
+        for i in range(5):
+            table.setItem(rowCount, i, QTableWidgetItem(""))
+            table.item(rowCount, i).setBackground(QtGui.QColor(0, 0, 0))
+        table.setItem(rowCount + 1, 0, QTableWidgetItem("Total Credits"))
+        table.setItem(rowCount + 1, 1, QTableWidgetItem(str(totalCredits)))
+        table.resizeColumnsToContents()
+        table.resizeRowsToContents()
+        exit = QPushButton("OK", self)
+        exit.clicked.connect(lambda: self.close())
+        exit.move(300, 250)
 
     def showFlags(self):
         if self.w is None:

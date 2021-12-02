@@ -384,3 +384,4 @@ class Section:
         else:
             return 3
             # Section doesn't exist
+
