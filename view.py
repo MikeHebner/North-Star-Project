@@ -275,6 +275,7 @@ class PrintStudentDetails(QWidget):
             self.w = None
 
 
+
 class studentDetails(QWidget):
     def __init__(self, student_id):
         super().__init__()

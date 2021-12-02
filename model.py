@@ -314,6 +314,9 @@ class Course:
 Course.add("Test", "CO1MP490", 3)
 Course.editDescription("LOOKHE3RE", "CO1MP490")
 
+Course.add("Test", "GYM301", 3)
+Course.editDescription("EXERCISE", "GYM301")
+
 
 # print(Course.remove("COMP490"))
 class Section:
