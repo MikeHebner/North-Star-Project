@@ -396,7 +396,7 @@ class addCourse(QWidget):
         course_desc = self.textbox.text()
         course_ID = self.textbox2.text()
         course_creds = self.textbox3.text()
-        model.Course.add(course_desc, course_ID, course_creds)
+        print(model.Course.add(course_desc, course_ID, course_creds))
 
 
 class modifyDescription(QWidget):
