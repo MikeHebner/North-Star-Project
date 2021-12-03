@@ -149,8 +149,7 @@ class RegisterStudent(QWidget):
         button.clicked.connect(self.addClick)
 
     def addClick(self):
-        courseID = self.textbox.text()
-        courseID = courseID.upper()
+        courseID = self.textbox.text().upper()
         sectionID = self.textbox3.text()
         studentID = self.textbox2.text()
         flag = 'None'
@@ -196,36 +195,40 @@ class RemoveFlag(QWidget):
         button2 = QPushButton("Exit", self)
         button2.move(20, 140)
         button2.clicked.connect(lambda: self.close())
-    #def initUi(self):
-        #self.textbox.setPlaceholderText("Enter Student ID")
-        #self.textbox.move(20, 20)
-        #self.textbox.resize(150, 30)
-        #button = QPushButton("Search", self)
-        #button.move(20, 100)
-        #button.clicked.connect(self.showFlags)
-        #button2 = QPushButton("Exit", self)
-        #button2.move(20, 140)
-        #button2.clicked.connect(lambda: self.close())
+
+    # def initUi(self):
+    # self.textbox.setPlaceholderText("Enter Student ID")
+    # self.textbox.move(20, 20)
+    # self.textbox.resize(150, 30)
+    # button = QPushButton("Search", self)
+    # button.move(20, 100)
+    # button.clicked.connect(self.showFlags)
+    # button2 = QPushButton("Exit", self)
+    # button2.move(20, 140)
+    # button2.clicked.connect(lambda: self.close())
 
     def showFlags(self):
         if self.w is None:
-            self.w = flagMenu(self.textbox.text())
+            self.w = rFlag(self.textbox.text())
             self.w.show()
         else:
             self.w.close()
             self.w = None
 
+
 class rFlag(QWidget):
     def __init__(self, student_id):
         super().__init__()
         self.student_id = student_id
-        self.setWindowTitle('Student Unenrollment')
+        self.setWindowTitle('Flag Removal')
         self.resize(500, 500)
         layout = QVBoxLayout()
         self.setLayout(layout)
-
+        self.textbox = QLineEdit(self)
+        self.textbox2 = QLineEdit(self)
         self.initUI()
         self.createTable()
+
     def initUI(self):
         self.createTable()
         semID = QLabel(self)
@@ -239,71 +242,47 @@ class rFlag(QWidget):
         studentDetails.move(150, 40)
         studentDetails.resize(150, 40)
         studentDetails.adjustSize()
+        label = QLabel(self)
+        label.setText("ENTER COURSE_ID AND SECTION_ID\nOF FLAGGED COURSE\nTO BE REMOVE FLAG")
+        label.move(220, 100)
+        label.resize(200,50)
+        self.textbox.setPlaceholderText("Enter Course ID")
+        self.textbox.move(275, 150)
+        self.textbox.resize(200, 50)
+        self.textbox2.setPlaceholderText("Enter Section ID")
+        self.textbox2.move(275, 200)
+        self.textbox2.resize(200, 50)
+        submit = QPushButton("Submit", self)
+        submit.clicked.connect(self.submitClick)
+        submit.move(300, 250)
+
 
     def createTable(self):
-        data = model.Enrollment.getEnrollmentDetails(self.student_id)
+        data = model.Enrollment.getIt(self.student_id)
         totalCredits = model.Enrollment.getEnrolledCreds(self.student_id)
         rowCount = model.Enrollment.enrolledCount(self.student_id)
-        table = QTableWidget(self)
-        table.setColumnCount(5)
-        table.setRowCount(rowCount + 2)
-        table.move(0, 100)
-        table.setMinimumSize(700, 500)
 
-        table.setHorizontalHeaderLabels(("Course Description;Course ID;Instructor;Credits;Course Flags").split(";"))
-        for i in range(rowCount):
-            for j in range(5):
-                table.setItem(i, j, QTableWidgetItem(str(data[i][j])))
-        for i in range(5):
-            table.setItem(rowCount, i, QTableWidgetItem(""))
-            table.item(rowCount, i).setBackground(QtGui.QColor(0, 0, 0))
-        table.setItem(rowCount + 1, 0, QTableWidgetItem("Total Credits"))
-        table.setItem(rowCount + 1, 1, QTableWidgetItem(str(totalCredits)))
-        table.resizeColumnsToContents()
-        table.resizeRowsToContents()
-        exit = QPushButton("OK", self)
-        exit.clicked.connect(lambda: self.close())
-        exit.move(300, 250)
-
-
-
-
-class flagMenu(QWidget):
-    def __init__(self, studentID):
-        super().__init__()
-        self.studentID = studentID
-        self.setWindowTitle('Student Flags')
-        self.resize(500, 500)
-        layout = QVBoxLayout()
-        self.setLayout(layout)
-        self.initUI()
-
-    def initUI(self):
-        label = QLabel(self)
-        label.setText("STUDENT ID:" + self.studentID)
-        label.move(20, 20)
-        label.resize(150, 30)
-        self.createTable()
-
-    def createTable(self):
         table = QTableWidget(self)
         table.setColumnCount(3)
-        table.setColumnWidth(0, 170)
-        table.move(10, 100)
-        table.resize(400, 300)
-        table.setHorizontalHeaderLabels(("Course Description;Section;Course Flags").split(";"))
-        option = QLineEdit(self)
-        option.setPlaceholderText("Enter section of flagged course")
-        option.move(300, 400)
-        option.resize(175, 40)
-        remove = QPushButton("Remove", self)
-        remove.move(300, 450)
-        exit = QPushButton("OK", self)
-        exit.clicked.connect(lambda: self.close())
-        exit.move(150, 450)
+        table.setRowCount(rowCount)
+        table.move(0, 100)
+        table.setMinimumSize(220, 150)
 
-    def popRows(self):
-        return
+        table.setHorizontalHeaderLabels(("Course ID;Section;Course Flags").split(";"))
+        for i in range(rowCount):
+            for j in range(3):
+                table.setItem(i, j, QTableWidgetItem(str(data[i][j])))
+        table.resizeColumnsToContents()
+        table.resizeRowsToContents()
+
+
+    def submitClick(self):
+        courseID = self.textbox.text().upper()
+        sectionID = self.textbox2.text()
+        course_link = model.Enrollment.getCourseLink(sectionID,courseID)
+        model.Enrollment.removeFlag(self.student_id,course_link[0])
+
+
 
 
 class PrintStudentDetails(QWidget):
@@ -335,7 +314,6 @@ class PrintStudentDetails(QWidget):
         else:
             self.w.close()
             self.w = None
-
 
 
 class studentDetails(QWidget):
@@ -412,8 +390,8 @@ class editSection(QWidget):
         self.textbox3.move(20, 100)
         self.textbox3.resize(150, 30)
         self.textbox4.setPlaceholderText("Enter Capacity")
-        self.textbox4.move(20,140)
-        self.textbox4.resize(150,30)
+        self.textbox4.move(20, 140)
+        self.textbox4.resize(150, 30)
         button = QPushButton("Add Section to Course", self)
         button.clicked.connect(self.addClick)
         button.move(20, 180)
@@ -425,7 +403,7 @@ class editSection(QWidget):
         section_ID = self.textbox2.text()
         instructor_ID = self.textbox3.text()
         capacity = self.textbox4.text()
-        print(model.Section.add(section_ID,capacity,course_ID,instructor_ID))
+        print(model.Section.add(section_ID, capacity, course_ID, instructor_ID))
 
 
 class addCourse(QWidget):
@@ -468,18 +446,22 @@ class modifyDescription(QWidget):
         self.w = None
         self.setWindowTitle('Modify Description')
         self.resize(200, 300)
+        self.textbox = QLineEdit(self)
+        self.textbox2 = QLineEdit(self)
         layout = QVBoxLayout()
         self.setLayout(layout)
         self.initUI()
 
     def initUI(self):
-        textbox = QLineEdit(self)
-        textbox.setPlaceholderText("Enter Course ID")
-        textbox.move(20, 20)
-        textbox.resize(150, 30)
-        search = QPushButton("Search", self)
+        self.textbox.setPlaceholderText("Enter Course ID")
+        self.textbox.move(20, 20)
+        self.textbox.resize(150, 30)
+        self.textbox2.setPlaceholderText("Enter modified Description")
+        self.textbox2.move(20, 40)
+        self.textbox2.resize(150, 30)
+        search = QPushButton("Submit", self)
         search.move(20, 200)
-        search.clicked.connect(self.showDescription)
+        search.clicked.connect(self.modDescription)
 
     def showDescription(self):
         if self.w is None:
@@ -488,6 +470,12 @@ class modifyDescription(QWidget):
         else:
             self.w.close()
             self.w = None
+
+    def modDescription(self):
+        course_id = self.textbox.text().upper()
+        course_desc = self.textbox2.text()
+        model.Course.editDescription(course_desc, course_id)
+        print(course_id, course_desc)
 
 
 class description(QWidget):

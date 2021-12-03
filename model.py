@@ -246,6 +246,12 @@ class Enrollment:
         else:
             return 0
 
+    @classmethod
+    def removeFlag(clscls,studentID,course_link):
+        q = "UPDATE Enrolls_in SET flag='None' WHERE student_ID=(?) AND course_link=(?)"
+        print(course_link)
+        conn.execute(q,(studentID,course_link,))
+        conn.commit()
 
 
 class Course:
