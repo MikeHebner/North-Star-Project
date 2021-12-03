@@ -1,5 +1,5 @@
 ## Still needs course class
-
+import sys
 import sqlite3 as sql
 
 conn = sql.connect('db.sqlite')
@@ -40,6 +40,7 @@ class Student:
             conn.execute(q, (studentID, studentName))
             conn.commit()
         except:
+            print("Oops!", sys.exc_info()[0], "occurred.")
             print("That name or ID already exists in this table")
 
     @classmethod
