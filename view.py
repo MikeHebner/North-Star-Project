@@ -1,7 +1,7 @@
 import sys
 from PyQt5 import QtWidgets, QtCore, QtGui
 from PyQt5.QtWidgets import QApplication, QMainWindow, QComboBox, QWidget, QPushButton, QLabel, QVBoxLayout, QLineEdit, \
-    QGridLayout, QTableWidget, QTableWidgetItem
+    QGridLayout, QTableWidget, QTableWidgetItem, QMessageBox
 from PyQt5.QtCore import pyqtSlot, QSize, Qt
 import PyQt5.QtWidgets as qtw
 import sqlite3 as sql
@@ -13,6 +13,7 @@ class AddStudent(QWidget):
         super().__init__()
         self.textbox2 = QLineEdit(self)
         self.textbox = QLineEdit(self)
+        self.msg = QMessageBox(self)
         self.prompt = QLabel(self)
         self.w = None
         self.setWindowTitle('Student Database')
@@ -48,10 +49,19 @@ class AddStudent(QWidget):
         button3.move(20, 220)
 
     def addClick(self):
-        studentID = self.textbox2.text()
-        studentName = self.textbox.text()
-        print("Name:" + studentName + " ID:" + studentID)
-        model.Student.add(studentID, studentName)
+        try:
+            studentID = self.textbox2.text()
+            studentName = self.textbox.text()
+            print("Name:" + studentName + " ID:" + studentID)
+            model.Student.add(studentID, studentName)
+        except Exception as e:
+            print("Oops!", e, "occurred.")
+            self.msg.setIcon(QMessageBox.Critical)
+            self.msg.setText("Error")
+            self.msg.setInformativeText('That name or ID already exists in this table')
+            self.msg.setWindowTitle("Error")
+            self.msg.exec_()
+
 
     def remClick(self):
         studentID = self.textbox2.text()
@@ -68,6 +78,7 @@ class AddInstructor(QWidget):
         super().__init__()
         self.w = None
         self.prompt = QLabel(self)
+        self.msg = QMessageBox(self)
         self.textbox2 = QLineEdit(self)
         self.textbox = QLineEdit(self)
         self.setWindowTitle('Instructor Database')
@@ -107,10 +118,18 @@ class AddInstructor(QWidget):
         model.Instructor.editInstructorInfo(newName, instructorID)
 
     def addClick(self):
-        instructorID = self.textbox2.text()
-        instructorName = self.textbox.text()
-        print("Name:" + instructorName + " ID:" + instructorID)
-        model.Instructor.add(instructorID, instructorName)
+        try:
+            instructorID = self.textbox2.text()
+            instructorName = self.textbox.text()
+            print("Name:" + instructorName + " ID:" + instructorID)
+            model.Instructor.add(instructorID, instructorName)
+        except Exception as e:
+            print("Oops!", e, "occurred.")
+            self.msg.setIcon(QMessageBox.Critical)
+            self.msg.setText("Error")
+            self.msg.setInformativeText('That name or ID already exists in this table')
+            self.msg.setWindowTitle("Error")
+            self.msg.exec_()
 
     def remClick(self):
         instructorID = self.textbox2.text()

@@ -35,13 +35,14 @@ class Student:
     @classmethod
     def add(self, studentID, studentName):
 
-        try:
-            q = "INSERT INTO Student(student_ID,student_name) VALUES (?,?)"
-            conn.execute(q, (studentID, studentName))
-            conn.commit()
-        except:
-            print("Oops!", sys.exc_info()[0], "occurred.")
-            print("That name or ID already exists in this table")
+        #try:
+        q = "INSERT INTO Student(student_ID,student_name) VALUES (?,?)"
+        conn.execute(q, (studentID, studentName))
+        conn.commit()
+        #except Exception as e:
+            #print("Oops!", e, "occurred.")
+            #print("That name or ID already exists in this table")
+            #sys.exc_info()[0]
 
     @classmethod
     def remove(self, studentID):
@@ -100,12 +101,12 @@ class Instructor:
     @classmethod
     def add(cls, instructorID, instructorName):
 
-        try:
-            q = "INSERT INTO main.Instructor(instructor_ID,instructor_name) VALUES (?,?)"
-            conn.execute(q, (instructorID, instructorName))
-            conn.commit()
-        except:
-            print("That name or ID already exists in this table")
+        #try:
+        q = "INSERT INTO main.Instructor(instructor_ID,instructor_name) VALUES (?,?)"
+        conn.execute(q, (instructorID, instructorName))
+        conn.commit()
+        #except:
+         #   print("That name or ID already exists in this table")
 
     @classmethod
     def remove(cls, instructorID):
