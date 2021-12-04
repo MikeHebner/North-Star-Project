@@ -64,8 +64,18 @@ class AddStudent(QWidget):
 
 
     def remClick(self):
-        studentID = self.textbox2.text()
-        model.Student.remove(studentID)
+        try:
+            studentID = self.textbox2.text()
+            studentName = self.textbox.text()
+            model.Student.remove(studentID)
+            print("Name:" + studentName + " ID Removed:" + studentID)
+        except Exception as e:
+            print("Oops!", e, "occurred.")
+            self.msg.setIcon(QMessageBox.Critical)
+            self.msg.setText("Error")
+            self.msg.setInformativeText('That name or ID does not exist in this table')
+            self.msg.setWindowTitle("Error")
+            self.msg.exec_()
 
     def editClick(self):
         studentID = self.textbox2.text()
