@@ -29,7 +29,7 @@ INSERT INTO Section(course_link,section_ID,capacity,course_ID,instructor_ID) VAL
 (null,002,3,"ANI330",0060),
 (null,001,8,"DRM150",0040),
 (null,001,8,"COM210",0060),
-(null,001,10,"ART101",0035),
+(null,001,1,"ART101",0035),
 (null,001,5,"DRM350",0010);
 
 INSERT INTO Enrolls_in(flag, student_ID, course_link) VALUES

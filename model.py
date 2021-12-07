@@ -35,14 +35,14 @@ class Student:
     @classmethod
     def add(self, studentID, studentName):
 
-        #try:
+        # try:
         q = "INSERT INTO Student(student_ID,student_name) VALUES (?,?)"
         conn.execute(q, (studentID, studentName))
         conn.commit()
-        #except Exception as e:
-            #print("Oops!", e, "occurred.")
-            #print("That name or ID already exists in this table")
-            #sys.exc_info()[0]
+        # except Exception as e:
+        # print("Oops!", e, "occurred.")
+        # print("That name or ID already exists in this table")
+        # sys.exc_info()[0]
 
     @classmethod
     def remove(self, studentID):
@@ -62,7 +62,7 @@ class Student:
 
         response = conn.execute(rq, (studentID,))
 
-        if response.fetchone()[0]==1:
+        if response.fetchone()[0] == 1:
             q = "UPDATE Student Set student_name= ? WHERE student_ID==?"
             conn.execute(q, (studentName, studentID))
             conn.commit()
@@ -101,12 +101,12 @@ class Instructor:
     @classmethod
     def add(cls, instructorID, instructorName):
 
-        #try:
+        # try:
         q = "INSERT INTO main.Instructor(instructor_ID,instructor_name) VALUES (?,?)"
         conn.execute(q, (instructorID, instructorName))
         conn.commit()
-        #except:
-         #   print("That name or ID already exists in this table")
+        # except:
+        #   print("That name or ID already exists in this table")
 
     @classmethod
     def remove(cls, instructorID):
@@ -151,15 +151,14 @@ class Enrollment:
     def add(cls, flag, student_id, course_link):
         q = "SELECT count(*) FROM Enrolls_in " \
             "WHERE student_ID=? AND course_link=?"
-        response = conn.execute(q,(student_id,course_link))
+        response = conn.execute(q, (student_id, course_link))
         check = response.fetchone()[0]
         if check > 0:
             return "ALREADY ENROLLED"
         else:
             q = "INSERT INTO Enrolls_in(flag, student_ID, course_link) VALUES (?,?,?)"
             conn.execute(q, (flag, student_id, course_link))
-
-            Section.updateCap(course_link)
+            Section.updateCap("minus",course_link)
             conn.commit()
 
     # Returns (int) capacity of course section
@@ -168,7 +167,6 @@ class Enrollment:
         q = "SELECT capacity FROM Section WHERE course_link=?"
         capacity = conn.execute(q, (course_link,))
         return capacity.fetchall()
-
 
     # Checks if student is already enrolled in given course section
     # Returns 0 if no, 1 if yes
@@ -246,17 +244,17 @@ class Enrollment:
         if len(response.fetchall()) > 0:
             q = "DELETE FROM Enrolls_in WHERE student_ID = (?) AND course_link = (?)"
             conn.execute(q, (studentID, course_link))
+            Section.updateCap("add",course_link)
             conn.commit()
             return 1
         else:
             return 0
 
-
     @classmethod
-    def removeFlag(clscls,studentID,course_link):
+    def removeFlag(clscls, studentID, course_link):
         q = "UPDATE Enrolls_in SET flag='None' WHERE student_ID=(?) AND course_link=(?)"
         print(course_link)
-        conn.execute(q,(studentID,course_link,))
+        conn.execute(q, (studentID, course_link,))
         conn.commit()
 
 
@@ -398,11 +396,15 @@ class Section:
             # Section doesn't exist
 
     @classmethod
-    def updateCap(cls,course_link):
+    def updateCap(cls, operator, course_link):
         capacity = Enrollment.checkCap(course_link)[0][0]
-        capacity = capacity - 1
-        q = "UPDATE Section set capacity=(?) WHERE course_link=(?)"
-        conn.execute(q,(capacity,course_link))
-        conn.commit()
-
-
+        if operator == 'minus':
+            capacity = capacity - 1
+            q = "UPDATE Section set capacity=(?) WHERE course_link=(?)"
+            conn.execute(q, (capacity, course_link))
+            conn.commit()
+        elif operator == 'plus':
+            capacity = capacity + 1
+            q = "UPDATE Section set capacity=(?) WHERE course_link=(?)"
+            conn.execute(q, (capacity, course_link))
+            conn.commit()

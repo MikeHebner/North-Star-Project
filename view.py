@@ -191,7 +191,7 @@ class RegisterStudent(QWidget):
             course_link = course_link[1]
             sa = model.Enrollment.checkCap(int(course_link))[0][0]
             print(sa)
-            if sa == 0:
+            if sa <= 0:
                 print("OVER CAPACITY FLAG")
                 flag = "OVER CAPACITY"
                 model.Enrollment.add(flag, studentID, course_link)
@@ -224,17 +224,6 @@ class RemoveFlag(QWidget):
         button2 = QPushButton("Exit", self)
         button2.move(20, 140)
         button2.clicked.connect(lambda: self.close())
-
-    # def initUi(self):
-    # self.textbox.setPlaceholderText("Enter Student ID")
-    # self.textbox.move(20, 20)
-    # self.textbox.resize(150, 30)
-    # button = QPushButton("Search", self)
-    # button.move(20, 100)
-    # button.clicked.connect(self.showFlags)
-    # button2 = QPushButton("Exit", self)
-    # button2.move(20, 140)
-    # button2.clicked.connect(lambda: self.close())
 
     def showFlags(self):
         if self.w is None:
@@ -572,50 +561,53 @@ class courses(QWidget):
         self.student_id = student_id
         self.setWindowTitle('Student Unenrollment')
         self.resize(500, 500)
+        self.textbox = QLineEdit(self)
         layout = QVBoxLayout()
         self.setLayout(layout)
-
         self.initUI()
         self.createTable()
 
     def initUI(self):
-        self.createTable()
         semID = QLabel(self)
         semID.setText("Fall 2021")
         semID.move(150, 20)
         semID.resize(150, 40)
         semID.adjustSize()
+        prompt = QLabel(self)
+        prompt.resize(100,100)
+        prompt.setText("Enter course link\nto unenroll.")
+        prompt.move(360,70)
         studentDetails = QLabel(self)
         studentName = model.Student.getName(self.student_id)[0]
         studentDetails.setText(str(studentName) + "  ID:" + self.student_id)
         studentDetails.move(150, 40)
         studentDetails.resize(150, 40)
         studentDetails.adjustSize()
+        self.textbox.move(300,250)
+        self.textbox.setPlaceholderText("COURSE LINK")
+        exit = QPushButton("Submit", self)
+        exit.clicked.connect(self.clicked)
+        exit.move(300, 280)
 
     def createTable(self):
-        data = model.Enrollment.getEnrollmentDetails(self.student_id)
-        totalCredits = model.Enrollment.getEnrolledCreds(self.student_id)
+        data = model.Enrollment.getIt(self.student_id)
         rowCount = model.Enrollment.enrolledCount(self.student_id)
         table = QTableWidget(self)
-        table.setColumnCount(5)
-        table.setRowCount(rowCount + 2)
+        table.setColumnCount(4)
+        table.setRowCount(rowCount)
         table.move(0, 100)
-        table.setMinimumSize(700, 500)
-
-        table.setHorizontalHeaderLabels(("Course Description;Course ID;Instructor;Credits;Course Flags").split(";"))
+        table.setMinimumSize(350, 150)
+        table.setHorizontalHeaderLabels(("Course ID;Section ID;Course Flags;Course Link").split(";"))
         for i in range(rowCount):
-            for j in range(5):
+            for j in range(4):
                 table.setItem(i, j, QTableWidgetItem(str(data[i][j])))
-        for i in range(5):
-            table.setItem(rowCount, i, QTableWidgetItem(""))
-            table.item(rowCount, i).setBackground(QtGui.QColor(0, 0, 0))
-        table.setItem(rowCount + 1, 0, QTableWidgetItem("Total Credits"))
-        table.setItem(rowCount + 1, 1, QTableWidgetItem(str(totalCredits)))
+
         table.resizeColumnsToContents()
         table.resizeRowsToContents()
-        exit = QPushButton("OK", self)
-        exit.clicked.connect(lambda: self.close())
-        exit.move(300, 250)
+
+    def clicked(self):
+        course_link = self.textbox.text()
+        model.Enrollment.unENroll(self.student_id,course_link)
 
 
 class MainWindow(QMainWindow):
