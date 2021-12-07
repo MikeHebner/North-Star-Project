@@ -193,7 +193,7 @@ class RegisterStudent(QWidget):
             print(sa)
             if sa == 0:
                 print("OVER CAPACITY FLAG")
-                flag = "Over Capacity"
+                flag = "OVER CAPACITY"
                 model.Enrollment.add(flag, studentID, course_link)
             elif model.Enrollment.getEnrolledCreds(studentID) > 12:
                 print("EXCESS CRED")

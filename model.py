@@ -158,6 +158,8 @@ class Enrollment:
         else:
             q = "INSERT INTO Enrolls_in(flag, student_ID, course_link) VALUES (?,?,?)"
             conn.execute(q, (flag, student_id, course_link))
+
+            Section.updateCap(course_link)
             conn.commit()
 
     # Returns (int) capacity of course section
@@ -166,6 +168,7 @@ class Enrollment:
         q = "SELECT capacity FROM Section WHERE course_link=?"
         capacity = conn.execute(q, (course_link,))
         return capacity.fetchall()
+
 
     # Checks if student is already enrolled in given course section
     # Returns 0 if no, 1 if yes
@@ -247,6 +250,7 @@ class Enrollment:
             return 1
         else:
             return 0
+
 
     @classmethod
     def removeFlag(clscls,studentID,course_link):
@@ -392,4 +396,13 @@ class Section:
         else:
             return 3
             # Section doesn't exist
+
+    @classmethod
+    def updateCap(cls,course_link):
+        capacity = Enrollment.checkCap(course_link)[0][0]
+        capacity = capacity - 1
+        q = "UPDATE Section set capacity=(?) WHERE course_link=(?)"
+        conn.execute(q,(capacity,course_link))
+        conn.commit()
+
 
