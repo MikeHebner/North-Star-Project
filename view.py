@@ -621,6 +621,7 @@ class courses(QWidget):
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
+        self.setStyleSheet("background:orange")
         self.w = None
         self.setMinimumSize(QSize(350, 300))
         self.setWindowTitle("Main Menu")
