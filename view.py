@@ -475,7 +475,7 @@ class modifyDescription(QWidget):
         self.textbox.move(20, 20)
         self.textbox.resize(150, 30)
         self.textbox2.setPlaceholderText("Enter modified Description")
-        self.textbox2.move(20, 40)
+        self.textbox2.move(20, 60)
         self.textbox2.resize(150, 30)
         search = QPushButton("Submit", self)
         search.move(20, 200)
@@ -613,6 +613,7 @@ class courses(QWidget):
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
+        self.setStyleSheet("background:orange")
         self.w = None
         self.setMinimumSize(QSize(350, 300))
         self.setWindowTitle("Main Menu")
