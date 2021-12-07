@@ -225,17 +225,6 @@ class RemoveFlag(QWidget):
         button2.move(20, 140)
         button2.clicked.connect(lambda: self.close())
 
-    # def initUi(self):
-    # self.textbox.setPlaceholderText("Enter Student ID")
-    # self.textbox.move(20, 20)
-    # self.textbox.resize(150, 30)
-    # button = QPushButton("Search", self)
-    # button.move(20, 100)
-    # button.clicked.connect(self.showFlags)
-    # button2 = QPushButton("Exit", self)
-    # button2.move(20, 140)
-    # button2.clicked.connect(lambda: self.close())
-
     def showFlags(self):
         if self.w is None:
             self.w = rFlag(self.textbox.text())
